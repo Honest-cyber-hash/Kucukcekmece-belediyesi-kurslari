@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Küçükçekmece Gençlik Merkezi - Premium Arayüz</title>
+    <title>Küçükçekmece Gençlik Merkezi - Faaliyetler</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,10 +21,9 @@
 
         body {
             font-family: 'Poppins', sans-serif;
-            /* Derin ve Koyu Mavi Degrade (Gradient) Arka Plan */
             background: linear-gradient(135deg, #0a192f 0%, #112240 100%);
             background-attachment: fixed;
-            color: #e6f1ff; /* Göz yormayan kırık beyaz yazı rengi */
+            color: #e6f1ff;
             line-height: 1.6;
             min-height: 100vh;
             display: flex;
@@ -60,23 +59,22 @@
             margin: 40px auto;
             padding: 0 20px;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); 
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
             gap: 30px;
-            flex-grow: 1; /* İçeriğin ekranı doldurmasını sağlar */
+            flex-grow: 1;
         }
 
         /* CAM EFEKTLİ (GLASSMORPHISM) KART TASARIMI */
         .card {
-            background: rgba(255, 255, 255, 0.03); /* Çok hafif beyaz şeffaflık */
-            backdrop-filter: blur(15px); /* Arka planı bulanıklaştırarak cam hissi verir */
-            -webkit-backdrop-filter: blur(15px); /* Safari desteği */
-            border: 1px solid rgba(255, 255, 255, 0.08); /* İnce şeffaf çerçeve */
-            border-radius: 20px; /* Yuvarlak köşeler */
+            background: rgba(255, 255, 255, 0.03); 
+            backdrop-filter: blur(15px); 
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.08); 
+            border-radius: 20px; 
             padding: 40px 30px;
             text-align: center;
-            text-decoration: none;
             color: inherit;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Yaylanma efekti */
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -101,51 +99,52 @@
         .card:hover {
             transform: translateY(-12px);
             background: rgba(255, 255, 255, 0.08);
-            border-color: rgba(100, 255, 218, 0.3); /* Açık turkuaz çerçeve parlaması */
+            border-color: rgba(100, 255, 218, 0.3); 
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
         }
 
         .card:hover::before {
-            left: 200%; /* Işık yansıması animasyonu */
+            left: 200%; 
         }
 
         /* PARLAYAN İKONLAR */
         .card-icon {
             font-size: 3.5em;
             margin-bottom: 25px;
-            color: #64ffda; /* Neon Turkuaz/Cyan rengi */
-            text-shadow: 0 0 20px rgba(100, 255, 218, 0.4); /* İkonların parlaması */
+            color: #64ffda; 
+            text-shadow: 0 0 20px rgba(100, 255, 218, 0.4); 
             transition: transform 0.3s ease;
         }
 
         .card:hover .card-icon {
-            transform: scale(1.1); /* Üzerine gelince ikon hafif büyür */
+            transform: scale(1.1); 
         }
 
         /* KART BAŞLIKLARI VE METİNLERİ */
         .card-title {
             font-size: 1.3em;
             font-weight: 600;
-            margin-bottom: 12px;
-            color: #ccd6f6; /* Açık mavi-gri */
+            margin-bottom: 15px;
+            color: #ccd6f6; 
         }
 
         .card-desc {
-            font-size: 0.9em;
+            font-size: 0.95em;
             color: #8892b0;
             font-weight: 300;
-            line-height: 1.5;
+            line-height: 1.6;
+            text-align: justify; /* Metni iki yana yasla, düzgün dursun */
         }
 
         /* ALT BİLGİ (FOOTER) */
         footer {
             text-align: center;
             padding: 30px 20px;
-            margin-top: auto;
+            margin-top: 50px;
             font-size: 0.85em;
             color: #8892b0;
             border-top: 1px solid rgba(255,255,255,0.05);
-            background: rgba(10, 25, 47, 0.5); /* Koyu mavi hafif şeffaf */
+            background: rgba(10, 25, 47, 0.5); 
         }
 
         footer p {
@@ -161,7 +160,7 @@
         /* MOBİL CİHAZ UYUMU */
         @media (max-width: 768px) {
             header h1 { font-size: 2em; }
-            .grid-container { grid-template-columns: 1fr; max-width: 400px; }
+            .grid-container { grid-template-columns: 1fr; max-width: 450px; }
             .card { padding: 30px 20px; }
         }
     </style>
@@ -175,29 +174,29 @@
 
     <div class="grid-container">
 
-        <a href="akademik.html" class="card">
+        <div class="card">
             <i class="fas fa-rocket card-icon"></i>
             <h2 class="card-title">Akademik Atölyeler</h2>
-            <p class="card-desc">Model Uçak, Plastik Makyaj, Green Box ve Mesleki Gelişim</p>
-        </a>
+            <p class="card-desc">Model Uçak, Model Gemi, Plastik Makyaj ve Green Box eğitimleriyle teorik bilginizi pratiğe dökün. Havacılıktan dijital içerik üreticiliğine kadar geleceğin mesleklerini merkezimizde uygulamalı olarak deneyimleyerek kariyerinize yön verin.</p>
+        </div>
 
-        <a href="sanat.html" class="card">
+        <div class="card">
             <i class="fas fa-masks-theater card-icon"></i>
             <h2 class="card-title">Sanat Kursları</h2>
-            <p class="card-desc">Resim, Tiyatro, Bağlama, Gitar, Keman Eğitimleri</p>
-        </a>
+            <p class="card-desc">Resim, Tiyatro, Bağlama, Gitar ve Keman eğitimleriyle iç dünyanızı estetik bir şekilde dışa vurun. Uzman eğitmenler eşliğinde sanatsal yeteneklerinizi keşfedin, el becerilerinizi geliştirin ve sahne özgüveni kazanın.</p>
+        </div>
 
-        <a href="geziler.html" class="card">
+        <div class="card">
             <i class="fas fa-compass card-icon"></i>
-            <h2 class="card-title">Kültür Gezileri</h2>
-            <p class="card-desc">Müzeler, Tarihi Sarnıçlar ve Doğa Bilim Merkezleri</p>
-        </a>
+            <h2 class="card-title">Bilim & Kültür Gezileri</h2>
+            <p class="card-desc">Öğrenmeyi sınıf duvarlarının ötesine taşıyın. Cumhuriyet, Atatürk, Sanat ve Doğa Bilim müzeleri ile tarihi Yerebatan Sarnıcı'na düzenlenen rehberli turlarla hem şehrinizin mirasını keşfedin hem de genel kültürünüzü zenginleştirin.</p>
+        </div>
 
-        <a href="dil.html" class="card">
+        <div class="card">
             <i class="fas fa-earth-americas card-icon"></i>
-            <h2 class="card-title">Yabancı Dil</h2>
-            <p class="card-desc">A1, A2, B1 Seviye Uluslararası Dil Kursları</p>
-        </a>
+            <h2 class="card-title">Yabancı Dil Kursları</h2>
+            <p class="card-desc">Ezberci sistemden uzak, tamamen pratik ve konuşma odaklı yabancı dil eğitimi alın. A1, A2 ve B1 seviyelerinde, uluslararası standartlara (CEFR) uygun olarak verilen derslerimizle dünyaya açılan iletişimin kapılarını aralayın.</p>
+        </div>
 
     </div>
 
