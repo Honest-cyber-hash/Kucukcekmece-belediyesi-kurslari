@@ -1,605 +1,897 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gençlik Merkezi — Küçükçekmece</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gençlik Merkezi — Küçükçekmece</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
 
-    <style>
-        :root {
-            --ink: #0e0e0e;
-            --paper: #f5f0e8;
-            --paper-warm: #ede8dd;
-            --accent: #c8402e;
-            --accent2: #1a3a6b;
-            --muted: #7a7368;
-            --rule: rgba(14,14,14,0.12);
-        }
+<style>
+:root {
+  --ink: #0e0e0e;
+  --paper: #f5f0e8;
+  --paper-warm: #ede8dd;
+  --muted: #7a7368;
+  --rule: rgba(14,14,14,0.12);
+  --c-red:    #c8402e;
+  --c-orange: #c97b2a;
+  --c-blue:   #1a3a6b;
+  --c-blue-m: #2a5298;
+  --c-violet: #6b2e8a;
+  --c-violet-m: #8b44aa;
+}
 
-        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
 
-        html { scroll-behavior: smooth; }
+body {
+  font-family:'DM Sans',sans-serif;
+  background:var(--paper);
+  color:var(--ink);
+  min-height:100vh;
+  overflow-x:hidden;
+}
 
-        body {
-            font-family: 'DM Sans', sans-serif;
-            background-color: var(--paper);
-            color: var(--ink);
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
+body::before {
+  content:'';
+  position:fixed; inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events:none; z-index:9999; opacity:.5;
+}
 
-        /* --- NOISE TEXTURE OVERLAY --- */
-        body::before {
-            content: '';
-            position: fixed;
-            inset: 0;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-            pointer-events: none;
-            z-index: 999;
-            opacity: 0.5;
-        }
+/* ── PAGE TRANSITIONS ── */
+.page { display:none; }
+.page.active { display:block; animation:fadeIn .32s ease; }
+@keyframes fadeIn { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
 
-        /* --- MASTHEAD --- */
-        .masthead {
-            border-bottom: 2px solid var(--ink);
-            padding: 0 48px;
-            display: flex;
-            align-items: stretch;
-            height: 64px;
-        }
+/* ══════════════════════════════
+   MASTHEAD
+══════════════════════════════ */
+.masthead {
+  border-bottom:2px solid var(--ink);
+  padding:0 48px;
+  display:flex; align-items:stretch; height:64px;
+  position:sticky; top:0; background:var(--paper); z-index:100;
+}
+.mast-logo {
+  font-family:'Bebas Neue',sans-serif;
+  font-size:28px; letter-spacing:.04em; color:var(--ink);
+  display:flex; align-items:center; flex:1;
+  cursor:pointer; border:none; background:none; font-family:'Bebas Neue',sans-serif;
+  text-align:left;
+}
+.mast-nav { display:flex; align-items:center; }
+.nav-btn {
+  font-size:11px; font-weight:500; letter-spacing:.12em;
+  text-transform:uppercase; color:var(--muted);
+  background:none; border:none; border-left:1px solid var(--rule);
+  font-family:'DM Sans',sans-serif; padding:0 20px; height:64px;
+  cursor:pointer; transition:color .2s, background .2s;
+}
+.nav-btn:hover { color:var(--ink); background:var(--paper-warm); }
 
-        .masthead-label {
-            font-family: 'DM Sans', sans-serif;
-            font-size: 10px;
-            font-weight: 500;
-            letter-spacing: 0.18em;
-            text-transform: uppercase;
-            color: var(--muted);
-            display: flex;
-            align-items: center;
-            padding-right: 24px;
-            border-right: 1px solid var(--rule);
-        }
+/* back button in sub-pages */
+.sub-masthead {
+  border-bottom:2px solid var(--ink);
+  padding:0 48px; display:flex; align-items:stretch; height:64px;
+  position:sticky; top:0; background:var(--paper); z-index:100;
+}
+.back-btn {
+  font-size:11px; font-weight:500; letter-spacing:.14em;
+  text-transform:uppercase; display:flex; align-items:center;
+  gap:8px; padding-right:24px; border-right:1px solid var(--rule);
+  cursor:pointer; border:none; background:none; font-family:'DM Sans',sans-serif;
+  transition:gap .2s;
+}
+.back-btn:hover { gap:3px; }
+.sub-logo {
+  font-family:'Bebas Neue',sans-serif; font-size:26px; letter-spacing:.04em;
+  color:var(--ink); display:flex; align-items:center; padding-left:24px; flex:1;
+}
+.sub-tag {
+  display:flex; align-items:center; font-size:10px; font-weight:500;
+  letter-spacing:.18em; text-transform:uppercase; color:var(--muted);
+}
 
-        .masthead-logo {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 32px;
-            letter-spacing: 0.04em;
-            color: var(--ink);
-            display: flex;
-            align-items: center;
-            padding-left: 24px;
-            flex: 1;
-        }
+/* ══════════════════════════════
+   HOME HERO
+══════════════════════════════ */
+.home-hero {
+  display:grid; grid-template-columns:1fr 1fr;
+  border-bottom:1px solid var(--ink); min-height:420px;
+}
+.home-hero-left {
+  padding:60px 48px; border-right:1px solid var(--ink);
+  display:flex; flex-direction:column; justify-content:space-between;
+}
+.eyebrow {
+  font-size:10px; font-weight:500; letter-spacing:.2em;
+  text-transform:uppercase; color:var(--c-red); margin-bottom:18px;
+}
+.home-hl {
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(72px,9vw,128px); line-height:.9; letter-spacing:-.01em;
+}
+.home-hl em { font-family:'DM Serif Display',serif; font-style:italic; color:var(--c-red); }
+.home-subline {
+  font-size:13px; font-weight:300; color:var(--muted);
+  line-height:1.75; max-width:360px; margin-top:24px;
+}
+.home-hero-right { background:var(--c-blue); overflow:hidden; }
+.stat-grid {
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:1px; background:rgba(255,255,255,.08); height:100%;
+}
+.stat-box {
+  background:var(--c-blue); padding:36px 32px;
+  display:flex; flex-direction:column; justify-content:flex-end;
+  transition:background .3s;
+}
+.stat-box:hover { background:rgba(255,255,255,.06); }
+.stat-num { font-family:'Bebas Neue',sans-serif; font-size:56px; line-height:1; color:#fff; }
+.stat-lbl { font-size:10px; font-weight:300; letter-spacing:.14em; text-transform:uppercase; color:rgba(255,255,255,.42); margin-top:5px; }
 
-        .masthead-nav {
-            display: flex;
-            align-items: center;
-            gap: 32px;
-        }
+/* TICKER */
+.ticker { border-top:1px solid var(--ink); border-bottom:1px solid var(--ink); background:var(--ink); overflow:hidden; white-space:nowrap; padding:12px 0; }
+.ticker-inner { display:inline-flex; animation:tick 32s linear infinite; }
+.ticker-item { font-family:'Bebas Neue',sans-serif; font-size:18px; letter-spacing:.08em; color:var(--paper); padding:0 44px; }
+.ticker-dot { color:var(--c-red); }
+@keyframes tick { from{transform:translateX(0)} to{transform:translateX(-50%)} }
 
-        .masthead-nav a {
-            font-size: 11px;
-            font-weight: 500;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            text-decoration: none;
-            color: var(--muted);
-            transition: color 0.2s;
-        }
-        .masthead-nav a:hover { color: var(--accent); }
+/* SECTION RULE */
+.sec-rule { padding:16px 48px; display:flex; align-items:center; gap:20px; border-bottom:1px solid var(--rule); }
+.sec-label { font-size:10px; font-weight:500; letter-spacing:.22em; text-transform:uppercase; color:var(--muted); white-space:nowrap; }
+.sec-line { flex:1; height:1px; background:var(--rule); }
 
-        /* --- HERO --- */
-        .hero {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            border-bottom: 1px solid var(--ink);
-            min-height: 460px;
-        }
+/* HOME CARDS */
+.home-cards { display:grid; grid-template-columns:repeat(4,1fr); }
+.hcard {
+  border-right:1px solid var(--ink); border-bottom:1px solid var(--ink);
+  padding:34px 28px 30px; display:flex; flex-direction:column;
+  position:relative; overflow:hidden; transition:background .3s;
+  min-height:340px; cursor:pointer; background:none;
+  border-top:none; border-left:none; text-align:left; font-family:inherit;
+}
+.hcard:last-child { border-right:none; }
+.hcard:hover { background:var(--paper-warm); }
+.hcard::after { content:''; position:absolute; bottom:0; left:0; height:3px; width:0; transition:width .4s; }
+.hcard:hover::after { width:100%; }
+.hc-red::after    { background:var(--c-red); }
+.hc-orange::after { background:var(--c-orange); }
+.hc-blue::after   { background:var(--c-blue); }
+.hc-violet::after { background:var(--c-violet); }
+.hcard-idx { font-family:'Bebas Neue',sans-serif; font-size:42px; line-height:1; color:var(--rule); margin-bottom:16px; }
+.hcard-icon { width:50px; height:50px; margin-bottom:16px; }
+.hcard-icon svg { width:100%; height:100%; }
+.hcard-title { font-family:'DM Serif Display',serif; font-size:19px; line-height:1.2; color:var(--ink); margin-bottom:10px; }
+.hcard-desc { font-size:12.5px; font-weight:300; color:var(--muted); line-height:1.75; flex:1; }
+.hcard-link { margin-top:20px; font-size:10px; font-weight:500; letter-spacing:.14em; text-transform:uppercase; display:flex; align-items:center; gap:6px; }
+.hcard-link-arrow { display:inline-block; transition:transform .2s; }
+.hcard:hover .hcard-link-arrow { transform:translateX(4px); }
+.hc-red    .hcard-link { color:var(--c-red); }
+.hc-orange .hcard-link { color:var(--c-orange); }
+.hc-blue   .hcard-link { color:var(--c-blue); }
+.hc-violet .hcard-link { color:var(--c-violet); }
 
-        .hero-left {
-            padding: 60px 48px;
-            border-right: 1px solid var(--ink);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
+/* ══════════════════════════════
+   SHARED SUB-PAGE
+══════════════════════════════ */
+.info-strip { display:grid; grid-template-columns:repeat(3,1fr); border-bottom:1px solid var(--ink); }
+.info-cell { padding:28px 40px; border-right:1px solid var(--ink); }
+.info-cell:last-child { border-right:none; }
+.i-label { font-size:10px; font-weight:500; letter-spacing:.2em; text-transform:uppercase; color:var(--muted); margin-bottom:8px; }
+.i-val { font-family:'Bebas Neue',sans-serif; font-size:32px; color:var(--ink); line-height:1; }
+.i-sub { font-size:12px; font-weight:300; color:var(--muted); margin-top:4px; }
 
-        .hero-eyebrow {
-            font-size: 10px;
-            font-weight: 500;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            color: var(--accent);
-            margin-bottom: 24px;
-        }
+.tags { display:flex; flex-wrap:wrap; gap:7px; }
+.tag { font-size:9.5px; font-weight:500; letter-spacing:.14em; text-transform:uppercase; padding:4px 10px; border-radius:2px; }
+.tg-r { border:1px solid rgba(200,64,46,.3);  color:var(--c-red); }
+.tg-o { border:1px solid rgba(201,123,42,.3); color:var(--c-orange); }
+.tg-b { border:1px solid rgba(26,58,107,.3);  color:var(--c-blue-m); }
+.tg-v { border:1px solid rgba(107,46,138,.3); color:var(--c-violet); }
 
-        .hero-headline {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: clamp(72px, 9vw, 128px);
-            line-height: 0.9;
-            letter-spacing: -0.01em;
-            color: var(--ink);
-        }
+/* ── AKADEMIK ── */
+.ak-hero {
+  background:var(--c-red); padding:56px 48px 48px;
+  display:grid; grid-template-columns:1fr 360px; gap:48px; align-items:end;
+}
+.ak-num { font-size:10px; font-weight:500; letter-spacing:.2em; text-transform:uppercase; color:rgba(255,255,255,.38); margin-bottom:16px; }
+.ak-title { font-family:'Bebas Neue',sans-serif; font-size:clamp(58px,8vw,104px); line-height:.9; color:#fff; }
+.ak-title em { font-family:'DM Serif Display',serif; font-style:italic; color:rgba(255,255,255,.62); }
+.ak-desc { font-size:13.5px; font-weight:300; color:rgba(255,255,255,.68); line-height:1.85; }
 
-        .hero-headline em {
-            font-family: 'DM Serif Display', serif;
-            font-style: italic;
-            color: var(--accent);
-        }
+.workshops { display:grid; grid-template-columns:repeat(2,1fr); }
+.ws {
+  border-right:1px solid var(--ink); border-bottom:1px solid var(--ink);
+  padding:38px 34px; position:relative; overflow:hidden; transition:background .3s; min-height:280px;
+}
+.ws:nth-child(even) { border-right:none; }
+.ws:hover { background:var(--paper-warm); }
+.ws::after { content:''; position:absolute; top:0; left:0; width:3px; height:0; background:var(--c-red); transition:height .4s; }
+.ws:hover::after { height:100%; }
+.ws-ico { width:42px; height:42px; margin-bottom:16px; }
+.ws-ico svg { width:100%; height:100%; }
+.ws-idx { font-family:'Bebas Neue',sans-serif; font-size:44px; line-height:1; color:var(--rule); margin-bottom:14px; }
+.ws-title { font-family:'DM Serif Display',serif; font-size:23px; line-height:1.2; color:var(--ink); margin-bottom:10px; }
+.ws-body { font-size:13px; font-weight:300; color:var(--muted); line-height:1.8; margin-bottom:18px; }
 
-        .hero-subline {
-            font-size: 13px;
-            font-weight: 300;
-            color: var(--muted);
-            letter-spacing: 0.04em;
-            line-height: 1.7;
-            max-width: 360px;
-            margin-top: 32px;
-        }
+.pull-q { padding:48px; border-top:1px solid var(--ink); border-bottom:1px solid var(--ink); display:grid; grid-template-columns:4px 1fr; gap:26px; align-items:center; }
+.pull-bar { height:100%; }
+.pull-text { font-family:'DM Serif Display',serif; font-style:italic; font-size:clamp(19px,2.6vw,28px); line-height:1.45; color:var(--ink); }
 
-        .hero-right {
-            position: relative;
-            background-color: var(--accent2);
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+/* ── SANAT ── */
+.sa-hero {
+  background:#1c1208; padding:56px 48px 48px;
+  display:grid; grid-template-columns:1fr 360px; gap:48px; align-items:end;
+  position:relative; overflow:hidden;
+}
+.sa-hero::before { content:''; position:absolute; top:-80px; right:-100px; width:420px; height:420px; border-radius:50%; border:56px solid rgba(201,123,42,.1); pointer-events:none; }
+.sa-num { font-size:10px; font-weight:500; letter-spacing:.2em; text-transform:uppercase; color:rgba(255,255,255,.3); margin-bottom:16px; }
+.sa-title { font-family:'Bebas Neue',sans-serif; font-size:clamp(58px,8vw,104px); line-height:.9; color:#fff; }
+.sa-title em { font-family:'DM Serif Display',serif; font-style:italic; color:var(--c-orange); }
+.sa-desc { font-size:13.5px; font-weight:300; color:rgba(255,255,255,.58); line-height:1.85; }
 
-        .hero-right-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1px;
-            background: rgba(255,255,255,0.1);
-            width: 100%;
-            height: 100%;
-        }
+.courses { border-bottom:1px solid var(--ink); }
+.course { display:grid; grid-template-columns:68px 1fr 1fr; border-bottom:1px solid var(--rule); transition:background .3s; }
+.course:last-child { border-bottom:none; }
+.course:hover { background:var(--paper-warm); }
+.c-num { border-right:1px solid var(--ink); display:flex; align-items:flex-start; justify-content:center; padding-top:30px; font-family:'Bebas Neue',sans-serif; font-size:12px; letter-spacing:.12em; color:var(--muted); }
+.c-left { padding:30px 32px; border-right:1px solid var(--rule); display:flex; flex-direction:column; gap:6px; }
+.c-disc { font-size:9.5px; font-weight:500; letter-spacing:.18em; text-transform:uppercase; color:var(--c-orange); }
+.c-ico { width:38px; height:38px; margin:8px 0; }
+.c-ico svg { width:100%; height:100%; }
+.c-title { font-family:'DM Serif Display',serif; font-size:22px; line-height:1.15; color:var(--ink); }
+.c-right { padding:30px 32px; }
+.c-body { font-size:13px; font-weight:300; color:var(--muted); line-height:1.8; margin-bottom:14px; }
 
-        .hero-stat {
-            background: var(--accent2);
-            padding: 40px 36px;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            transition: background 0.3s;
-        }
-        .hero-stat:hover { background: rgba(255,255,255,0.06); }
+.accent-bar { padding:44px 48px; display:grid; grid-template-columns:1fr 1fr; gap:44px; align-items:center; }
+.ab-quote { font-family:'DM Serif Display',serif; font-style:italic; font-size:clamp(17px,2.3vw,25px); color:var(--ink); line-height:1.45; }
+.ab-cta { font-size:13px; font-weight:300; color:var(--muted); line-height:1.8; }
 
-        .hero-stat-number {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 64px;
-            line-height: 1;
-            color: #fff;
-            letter-spacing: 0.02em;
-        }
+/* ── GEZİLER ── */
+.gz-hero { background:var(--c-blue); display:grid; grid-template-columns:1fr 1fr; min-height:340px; }
+.gz-left { padding:56px 48px 48px; border-right:1px solid rgba(255,255,255,.1); }
+.gz-num { font-size:10px; font-weight:500; letter-spacing:.2em; text-transform:uppercase; color:rgba(255,255,255,.32); margin-bottom:16px; }
+.gz-title { font-family:'Bebas Neue',sans-serif; font-size:clamp(50px,7vw,90px); line-height:.92; color:#fff; }
+.gz-title em { font-family:'DM Serif Display',serif; font-style:italic; color:rgba(255,255,255,.48); }
+.gz-right { padding:56px 48px 48px; display:flex; flex-direction:column; justify-content:space-between; }
+.gz-desc { font-size:13.5px; font-weight:300; color:rgba(255,255,255,.58); line-height:1.85; }
+.gz-stats { display:flex; gap:32px; margin-top:28px; }
+.gs-val { font-family:'Bebas Neue',sans-serif; font-size:36px; color:#fff; line-height:1; }
+.gs-lbl { font-size:10px; font-weight:300; letter-spacing:.14em; text-transform:uppercase; color:rgba(255,255,255,.36); margin-top:4px; }
 
-        .hero-stat-label {
-            font-size: 11px;
-            font-weight: 300;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            color: rgba(255,255,255,0.5);
-            margin-top: 8px;
-        }
+.dests { display:grid; grid-template-columns:repeat(4,1fr); border-bottom:2px solid var(--ink); }
+.dest { border-right:1px solid var(--ink); padding:34px 26px; position:relative; overflow:hidden; transition:background .3s; min-height:300px; display:flex; flex-direction:column; }
+.dest:last-child { border-right:none; }
+.dest:hover { background:var(--paper-warm); }
+.d-ico { width:42px; height:42px; margin-bottom:14px; }
+.d-ico svg { width:100%; height:100%; }
+.d-dot { width:8px; height:8px; border-radius:50%; background:var(--c-blue); margin-bottom:18px; transition:transform .3s; }
+.dest:hover .d-dot { transform:scale(1.8); }
+.d-idx { font-family:'Bebas Neue',sans-serif; font-size:11px; letter-spacing:.18em; color:var(--muted); margin-bottom:10px; }
+.d-title { font-family:'DM Serif Display',serif; font-size:19px; line-height:1.2; color:var(--ink); margin-bottom:10px; }
+.d-body { font-size:12px; font-weight:300; color:var(--muted); line-height:1.8; flex:1; }
+.d-type { margin-top:18px; font-size:9.5px; font-weight:500; letter-spacing:.16em; text-transform:uppercase; color:var(--c-blue-m); border-top:1px solid var(--rule); padding-top:12px; }
 
-        /* --- SECTION DIVIDER --- */
-        .section-header {
-            padding: 20px 48px;
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            border-bottom: 1px solid var(--rule);
-        }
+.hl-grid { display:grid; grid-template-columns:1fr 2px 1fr; border-bottom:1px solid var(--ink); }
+.hl-div { background:var(--ink); }
+.hl-dark { padding:48px; background:var(--ink); }
+.hl-light { padding:48px; }
+.hll-label { font-size:10px; font-weight:500; letter-spacing:.2em; text-transform:uppercase; color:rgba(255,255,255,.35); margin-bottom:14px; }
+.hll-d-label { font-size:10px; font-weight:500; letter-spacing:.2em; text-transform:uppercase; color:var(--muted); margin-bottom:14px; }
+.hll-big { font-family:'Bebas Neue',sans-serif; font-size:clamp(36px,5vw,58px); line-height:.95; color:#fff; margin-bottom:12px; }
+.hll-big-d { font-family:'DM Serif Display',serif; font-style:italic; font-size:clamp(20px,2.8vw,32px); line-height:1.3; color:var(--ink); margin-bottom:12px; }
+.hll-sub { font-size:13px; font-weight:300; color:rgba(255,255,255,.48); line-height:1.75; }
+.hll-sub-d { font-size:13px; font-weight:300; color:var(--muted); line-height:1.75; }
 
-        .section-header-label {
-            font-size: 10px;
-            font-weight: 500;
-            letter-spacing: 0.22em;
-            text-transform: uppercase;
-            color: var(--muted);
-            white-space: nowrap;
-        }
+/* ── DİL ── */
+.dil-hero { background:var(--ink); padding:56px 48px 48px; position:relative; overflow:hidden; }
+.dil-hero::after { content:'A1  A2  B1'; position:absolute; right:40px; bottom:-20px; font-family:'Bebas Neue',sans-serif; font-size:100px; color:rgba(255,255,255,.04); letter-spacing:.06em; pointer-events:none; white-space:nowrap; }
+.dil-num { font-size:10px; font-weight:500; letter-spacing:.2em; text-transform:uppercase; color:rgba(255,255,255,.28); margin-bottom:16px; }
+.dil-title { font-family:'Bebas Neue',sans-serif; font-size:clamp(58px,9vw,110px); line-height:.9; color:#fff; margin-bottom:26px; }
+.dil-title em { font-family:'DM Serif Display',serif; font-style:italic; color:var(--c-violet-m); }
+.dil-btm { display:grid; grid-template-columns:1fr 1fr; gap:44px; align-items:end; }
+.dil-desc { font-size:13.5px; font-weight:300; color:rgba(255,255,255,.52); line-height:1.85; }
+.cefr-wrap { display:flex; gap:12px; justify-content:flex-end; }
+.cefr-box { border:1px solid rgba(255,255,255,.12); padding:16px 20px; text-align:center; min-width:72px; transition:border-color .3s,background .3s; }
+.cefr-box:hover { border-color:var(--c-violet-m); background:rgba(107,46,138,.14); }
+.cefr-lv { font-family:'Bebas Neue',sans-serif; font-size:32px; color:#fff; line-height:1; }
+.cefr-lb { font-size:9px; font-weight:500; letter-spacing:.16em; text-transform:uppercase; color:rgba(255,255,255,.3); margin-top:5px; }
 
-        .section-header-line {
-            flex: 1;
-            height: 1px;
-            background: var(--rule);
-        }
+.levels { display:grid; grid-template-columns:repeat(3,1fr); border-bottom:2px solid var(--ink); }
+.lv { border-right:1px solid var(--ink); padding:40px 34px; position:relative; transition:background .3s; display:flex; flex-direction:column; }
+.lv:last-child { border-right:none; }
+.lv:hover { background:var(--paper-warm); }
+.lv-head { display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:20px; }
+.lv-badge { font-family:'Bebas Neue',sans-serif; font-size:48px; line-height:1; color:var(--c-violet); }
+.lv-meta { text-align:right; }
+.lv-cefr { font-size:10px; font-weight:500; letter-spacing:.18em; text-transform:uppercase; color:var(--c-violet-m); margin-bottom:2px; }
+.lv-name { font-size:12px; font-weight:300; color:var(--muted); }
+.lv-ico { width:40px; height:40px; margin-bottom:14px; }
+.lv-ico svg { width:100%; height:100%; }
+.prog-bar { height:2px; background:var(--rule); margin-bottom:18px; }
+.prog-fill { height:100%; background:var(--c-violet); }
+.lv-title { font-family:'DM Serif Display',serif; font-size:21px; line-height:1.2; color:var(--ink); margin-bottom:10px; }
+.lv-desc { font-size:13px; font-weight:300; color:var(--muted); line-height:1.85; flex:1; margin-bottom:20px; }
+.sk-row { display:flex; align-items:center; gap:8px; font-size:12px; color:var(--ink); margin-bottom:6px; }
+.sk-dot { width:5px; height:5px; border-radius:50%; background:var(--c-violet); flex-shrink:0; }
 
-        /* --- ACTIVITIES GRID --- */
-        .activities {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-        }
+.methods { display:grid; grid-template-columns:repeat(4,1fr); border-bottom:1px solid var(--ink); }
+.mth { padding:30px 26px; border-right:1px solid var(--rule); }
+.mth:last-child { border-right:none; }
+.mth-ico { width:38px; height:38px; margin-bottom:12px; }
+.mth-ico svg { width:100%; height:100%; }
+.mth-num { font-family:'Bebas Neue',sans-serif; font-size:26px; color:var(--c-violet); margin-bottom:8px; line-height:1; }
+.mth-title { font-size:14px; font-weight:500; color:var(--ink); margin-bottom:6px; }
+.mth-desc { font-size:12px; font-weight:300; color:var(--muted); line-height:1.7; }
 
-        .activity-card {
-            border-right: 1px solid var(--ink);
-            border-bottom: 1px solid var(--ink);
-            padding: 40px 32px 36px;
-            text-decoration: none;
-            color: inherit;
-            display: flex;
-            flex-direction: column;
-            position: relative;
-            overflow: hidden;
-            transition: background 0.3s;
-            min-height: 380px;
-        }
+/* ══════════════════════════════
+   FOOTER
+══════════════════════════════ */
+footer { border-top:2px solid var(--ink); padding:24px 48px; display:flex; align-items:center; justify-content:space-between; }
+.f-brand { font-family:'Bebas Neue',sans-serif; font-size:20px; letter-spacing:.06em; }
+.f-copy { font-size:11px; font-weight:300; color:var(--muted); }
+.f-dev { font-size:11px; color:var(--muted); }
+.f-dev span { font-weight:500; }
 
-        .activity-card:last-child { border-right: none; }
-
-        .activity-card::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            height: 3px;
-            width: 0;
-            transition: width 0.4s ease;
-        }
-
-        .activity-card:hover { background: var(--paper-warm); }
-        .activity-card:hover::after { width: 100%; }
-
-        .card-red::after    { background: #c8402e; }
-        .card-orange::after { background: #c97b2a; }
-        .card-blue::after   { background: #1a3a6b; }
-        .card-violet::after { background: #6b2e8a; }
-
-        .activity-index {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 48px;
-            line-height: 1;
-            color: var(--rule);
-            margin-bottom: 32px;
-            letter-spacing: 0.04em;
-        }
-
-        .activity-icon-wrap {
-            width: 48px;
-            height: 48px;
-            margin-bottom: 20px;
-        }
-
-        .activity-icon-wrap svg {
-            width: 100%;
-            height: 100%;
-        }
-
-        .activity-title {
-            font-family: 'DM Serif Display', serif;
-            font-size: 22px;
-            line-height: 1.2;
-            color: var(--ink);
-            margin-bottom: 16px;
-        }
-
-        .activity-desc {
-            font-size: 13px;
-            font-weight: 300;
-            color: var(--muted);
-            line-height: 1.75;
-            flex: 1;
-        }
-
-        .activity-link {
-            margin-top: 28px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 11px;
-            font-weight: 500;
-            letter-spacing: 0.14em;
-            text-transform: uppercase;
-        }
-
-        .card-red    .activity-link { color: #c8402e; }
-        .card-orange .activity-link { color: #c97b2a; }
-        .card-blue   .activity-link { color: #1a3a6b; }
-        .card-violet .activity-link { color: #6b2e8a; }
-
-        .activity-link-arrow {
-            display: inline-block;
-            transition: transform 0.2s;
-        }
-        .activity-card:hover .activity-link-arrow { transform: translateX(4px); }
-
-        /* --- MARQUEE TICKER --- */
-        .ticker {
-            border-top: 1px solid var(--ink);
-            border-bottom: 1px solid var(--ink);
-            background: var(--ink);
-            overflow: hidden;
-            white-space: nowrap;
-            padding: 14px 0;
-        }
-
-        .ticker-inner {
-            display: inline-flex;
-            animation: ticker-scroll 28s linear infinite;
-        }
-
-        .ticker-item {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 20px;
-            letter-spacing: 0.08em;
-            color: var(--paper);
-            padding: 0 48px;
-        }
-
-        .ticker-dot {
-            color: var(--accent);
-            margin-right: 48px;
-        }
-
-        @keyframes ticker-scroll {
-            from { transform: translateX(0); }
-            to { transform: translateX(-50%); }
-        }
-
-        /* --- FOOTER --- */
-        footer {
-            border-top: 2px solid var(--ink);
-            padding: 28px 48px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .footer-brand {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 20px;
-            letter-spacing: 0.06em;
-            color: var(--ink);
-        }
-
-        .footer-copy {
-            font-size: 11px;
-            font-weight: 300;
-            color: var(--muted);
-            letter-spacing: 0.06em;
-        }
-
-        .footer-dev {
-            font-size: 11px;
-            color: var(--muted);
-            letter-spacing: 0.06em;
-        }
-
-        .footer-dev span {
-            font-weight: 500;
-            color: var(--accent2);
-        }
-
-        /* --- ANIMATIONS --- */
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(24px); }
-            to   { opacity: 1; transform: translateY(0); }
-        }
-
-        .hero-eyebrow  { animation: fadeUp 0.6s ease both 0.1s; }
-        .hero-headline { animation: fadeUp 0.6s ease both 0.2s; }
-        .hero-subline  { animation: fadeUp 0.6s ease both 0.35s; }
-        .hero-stat:nth-child(1) { animation: fadeUp 0.5s ease both 0.4s; }
-        .hero-stat:nth-child(2) { animation: fadeUp 0.5s ease both 0.5s; }
-        .hero-stat:nth-child(3) { animation: fadeUp 0.5s ease both 0.6s; }
-        .hero-stat:nth-child(4) { animation: fadeUp 0.5s ease both 0.7s; }
-
-        .activity-card {
-            animation: fadeUp 0.5s ease both;
-        }
-        .activity-card:nth-child(1) { animation-delay: 0.5s; }
-        .activity-card:nth-child(2) { animation-delay: 0.6s; }
-        .activity-card:nth-child(3) { animation-delay: 0.7s; }
-        .activity-card:nth-child(4) { animation-delay: 0.8s; }
-
-        /* --- RESPONSIVE --- */
-        @media (max-width: 900px) {
-            .masthead { padding: 0 24px; }
-            .masthead-nav { display: none; }
-            .hero { grid-template-columns: 1fr; min-height: auto; }
-            .hero-left { padding: 40px 24px; border-right: none; border-bottom: 1px solid var(--ink); }
-            .hero-right { min-height: 260px; }
-            .hero-right-grid { grid-template-columns: 1fr 1fr; }
-            .hero-stat { padding: 24px; }
-            .hero-stat-number { font-size: 44px; }
-            .activities { grid-template-columns: 1fr 1fr; }
-            .activity-card:nth-child(2) { border-right: none; }
-            .activity-card:nth-child(3) { border-right: 1px solid var(--ink); }
-            .section-header { padding: 16px 24px; }
-            footer { padding: 20px 24px; flex-direction: column; gap: 10px; text-align: center; }
-        }
-
-        @media (max-width: 540px) {
-            .activities { grid-template-columns: 1fr; }
-            .activity-card { border-right: none; min-height: auto; }
-            .activity-card:nth-child(3) { border-right: none; }
-            .hero-headline { font-size: 72px; }
-        }
-    </style>
+/* ══════════════════════════════
+   RESPONSIVE
+══════════════════════════════ */
+@media(max-width:960px){
+  .masthead,.sub-masthead { padding:0 20px; }
+  .mast-nav { display:none; }
+  .home-hero { grid-template-columns:1fr; min-height:auto; }
+  .home-hero-left { padding:40px 20px; border-right:none; border-bottom:1px solid var(--ink); }
+  .home-hero-right { min-height:220px; }
+  .home-cards { grid-template-columns:1fr 1fr; }
+  .hcard:nth-child(2) { border-right:none; }
+  .hcard:nth-child(3) { border-right:1px solid var(--ink); }
+  .sec-rule,.pull-q,.accent-bar { padding:14px 20px; }
+  .ak-hero,.sa-hero { grid-template-columns:1fr; padding:36px 20px; }
+  .workshops { grid-template-columns:1fr; }
+  .ws { border-right:none; }
+  .course { grid-template-columns:48px 1fr; }
+  .c-left { border-right:none; }
+  .c-right { grid-column:2; padding-top:0; }
+  .gz-hero { grid-template-columns:1fr; }
+  .gz-left { border-right:none; border-bottom:1px solid rgba(255,255,255,.1); }
+  .dests { grid-template-columns:1fr 1fr; }
+  .dest:nth-child(2) { border-right:none; }
+  .dest:nth-child(3) { border-right:1px solid var(--ink); }
+  .hl-grid { grid-template-columns:1fr; }
+  .hl-div { display:none; }
+  .hl-dark,.hl-light { padding:32px 20px; }
+  .dil-hero { padding:36px 20px; }
+  .dil-hero::after { display:none; }
+  .dil-btm { grid-template-columns:1fr; }
+  .cefr-wrap { justify-content:flex-start; }
+  .levels { grid-template-columns:1fr; }
+  .lv { border-right:none; }
+  .methods { grid-template-columns:1fr 1fr; }
+  .info-strip { grid-template-columns:1fr; }
+  .info-cell { border-right:none; border-bottom:1px solid var(--ink); }
+  footer { padding:20px; flex-direction:column; gap:8px; text-align:center; }
+}
+@media(max-width:540px){
+  .home-cards { grid-template-columns:1fr; }
+  .hcard { border-right:none; }
+  .hcard:nth-child(3) { border-right:none; }
+  .dests { grid-template-columns:1fr; }
+  .dest { border-right:none; }
+  .dest:nth-child(3) { border-right:none; }
+}
+</style>
 </head>
 <body>
 
-    <!-- MASTHEAD -->
-    <header class="masthead">
-        <div class="masthead-label">Küçükçekmece Belediyesi</div>
-        <div class="masthead-logo">Gençlik Merkezi</div>
-        <nav class="masthead-nav">
-            <a href="akademik.html">Akademik</a>
-            <a href="sanat.html">Sanat</a>
-            <a href="geziler.html">Geziler</a>
-            <a href="dil.html">Dil</a>
-        </nav>
-    </header>
+<!-- ═══════════ HOME ═══════════ -->
+<div id="pg-home" class="page active">
+  <header class="masthead">
+    <button class="mast-logo" onclick="go('home')">Gençlik Merkezi</button>
+    <nav class="mast-nav">
+      <button class="nav-btn" onclick="go('akademik')">Akademik</button>
+      <button class="nav-btn" onclick="go('sanat')">Sanat</button>
+      <button class="nav-btn" onclick="go('geziler')">Geziler</button>
+      <button class="nav-btn" onclick="go('dil')">Dil</button>
+    </nav>
+  </header>
 
-    <!-- HERO -->
-    <section class="hero">
-        <div class="hero-left">
-            <div>
-                <p class="hero-eyebrow">Geleceğe Değer Katan Faaliyetler</p>
-                <h1 class="hero-headline">Gen<em>çlik</em><br>Merkezi</h1>
-            </div>
-            <p class="hero-subline">
-                Sanat, bilim, kültür ve dil alanlarında düzenlenen atölyeler, kurslar ve gezilerle 
-                potansiyelinizin sınırlarını zorlayın. Her aktivite, geleceğinize bir yatırım.
-            </p>
-        </div>
-        <div class="hero-right">
-            <div class="hero-right-grid">
-                <div class="hero-stat">
-                    <div class="hero-stat-number">4</div>
-                    <div class="hero-stat-label">Faaliyet Alanı</div>
-                </div>
-                <div class="hero-stat">
-                    <div class="hero-stat-number">12+</div>
-                    <div class="hero-stat-label">Aktif Kurs</div>
-                </div>
-                <div class="hero-stat">
-                    <div class="hero-stat-number">A1–B1</div>
-                    <div class="hero-stat-label">CEFR Dil Seviyeleri</div>
-                </div>
-                <div class="hero-stat">
-                    <div class="hero-stat-number">5</div>
-                    <div class="hero-stat-label">Kültür Gezisi</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- TICKER -->
-    <div class="ticker" aria-hidden="true">
-        <div class="ticker-inner">
-            <span class="ticker-item">Model Uçak <span class="ticker-dot">✦</span></span>
-            <span class="ticker-item">Tiyatro <span class="ticker-dot">✦</span></span>
-            <span class="ticker-item">Gitar & Keman <span class="ticker-dot">✦</span></span>
-            <span class="ticker-item">Yabancı Dil <span class="ticker-dot">✦</span></span>
-            <span class="ticker-item">Green Box <span class="ticker-dot">✦</span></span>
-            <span class="ticker-item">Bağlama <span class="ticker-dot">✦</span></span>
-            <span class="ticker-item">Müze Gezileri <span class="ticker-dot">✦</span></span>
-            <span class="ticker-item">Model Gemi <span class="ticker-dot">✦</span></span>
-            <span class="ticker-item">Plastik Makyaj <span class="ticker-dot">✦</span></span>
-            <span class="ticker-item">Resim <span class="ticker-dot">✦</span></span>
-            <!-- duplicate for seamless loop -->
-            <span class="ticker-item">Model Uçak <span class="ticker-dot">✦</span></span>
-            <span class="ticker-item">Tiyatro <span class="ticker-dot">✦</span></span>
-            <span class="ticker-item">Gitar & Keman <span class="ticker-dot">✦</span></span>
-            <span class="ticker-item">Yabancı Dil <span class="ticker-dot">✦</span></span>
-            <span class="ticker-item">Green Box <span class="ticker-dot">✦</span></span>
-            <span class="ticker-item">Bağlama <span class="ticker-dot">✦</span></span>
-            <span class="ticker-item">Müze Gezileri <span class="ticker-dot">✦</span></span>
-            <span class="ticker-item">Model Gemi <span class="ticker-dot">✦</span></span>
-            <span class="ticker-item">Plastik Makyaj <span class="ticker-dot">✦</span></span>
-            <span class="ticker-item">Resim <span class="ticker-dot">✦</span></span>
-        </div>
+  <section class="home-hero">
+    <div class="home-hero-left">
+      <div>
+        <p class="eyebrow">Geleceğe Değer Katan Faaliyetler</p>
+        <h1 class="home-hl">Gen<em>çlik</em><br>Merkezi</h1>
+      </div>
+      <p class="home-subline">Sanat, bilim, kültür ve dil alanlarında düzenlenen atölyeler, kurslar ve gezilerle potansiyelinizin sınırlarını zorlayın.</p>
     </div>
-
-    <!-- SECTION HEADER -->
-    <div class="section-header">
-        <span class="section-header-label">Faaliyet Alanları</span>
-        <div class="section-header-line"></div>
-        <span class="section-header-label">2026</span>
+    <div class="home-hero-right">
+      <div class="stat-grid">
+        <div class="stat-box"><div class="stat-num">4</div><div class="stat-lbl">Faaliyet Alanı</div></div>
+        <div class="stat-box"><div class="stat-num">12+</div><div class="stat-lbl">Aktif Kurs</div></div>
+        <div class="stat-box"><div class="stat-num">A1–B1</div><div class="stat-lbl">Dil Seviyeleri</div></div>
+        <div class="stat-box"><div class="stat-num">5</div><div class="stat-lbl">Kültür Gezisi</div></div>
+      </div>
     </div>
+  </section>
 
-    <!-- ACTIVITY CARDS -->
-    <main class="activities">
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-inner">
+      <span class="ticker-item">Model Uçak <span class="ticker-dot">✦</span></span>
+      <span class="ticker-item">Tiyatro <span class="ticker-dot">✦</span></span>
+      <span class="ticker-item">Gitar & Keman <span class="ticker-dot">✦</span></span>
+      <span class="ticker-item">Yabancı Dil <span class="ticker-dot">✦</span></span>
+      <span class="ticker-item">Green Box <span class="ticker-dot">✦</span></span>
+      <span class="ticker-item">Bağlama <span class="ticker-dot">✦</span></span>
+      <span class="ticker-item">Müze Gezileri <span class="ticker-dot">✦</span></span>
+      <span class="ticker-item">Model Gemi <span class="ticker-dot">✦</span></span>
+      <span class="ticker-item">Plastik Makyaj <span class="ticker-dot">✦</span></span>
+      <span class="ticker-item">Resim <span class="ticker-dot">✦</span></span>
+      <span class="ticker-item">Model Uçak <span class="ticker-dot">✦</span></span>
+      <span class="ticker-item">Tiyatro <span class="ticker-dot">✦</span></span>
+      <span class="ticker-item">Gitar & Keman <span class="ticker-dot">✦</span></span>
+      <span class="ticker-item">Yabancı Dil <span class="ticker-dot">✦</span></span>
+      <span class="ticker-item">Green Box <span class="ticker-dot">✦</span></span>
+      <span class="ticker-item">Bağlama <span class="ticker-dot">✦</span></span>
+      <span class="ticker-item">Müze Gezileri <span class="ticker-dot">✦</span></span>
+      <span class="ticker-item">Model Gemi <span class="ticker-dot">✦</span></span>
+      <span class="ticker-item">Plastik Makyaj <span class="ticker-dot">✦</span></span>
+      <span class="ticker-item">Resim <span class="ticker-dot">✦</span></span>
+    </div>
+  </div>
 
-        <!-- Akademik -->
-        <a href="akademik.html" class="activity-card card-red">
-            <div class="activity-index">01</div>
-            <div class="activity-icon-wrap">
-                <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M24 6L42 16V32L24 42L6 32V16L24 6Z" stroke="#c8402e" stroke-width="1.5" fill="none"/>
-                    <path d="M24 6V42M6 16L42 16M6 32L42 32" stroke="#c8402e" stroke-width="1" opacity="0.3"/>
-                    <circle cx="24" cy="24" r="4" fill="#c8402e"/>
-                </svg>
-            </div>
-            <h2 class="activity-title">Akademik Atölyeler</h2>
-            <p class="activity-desc">
-                Model Uçak, Model Gemi, Plastik Makyaj ve Green Box eğitimleriyle teorik bilginizi pratiğe dökün. 
-                Havacılıktan dijital içerik üreticiliğine kadar geleceğin mesleklerini deneyimleyin.
-            </p>
-            <div class="activity-link">
-                Detaylı Bilgi <span class="activity-link-arrow">→</span>
-            </div>
-        </a>
+  <div class="sec-rule">
+    <span class="sec-label">Faaliyet Alanları</span>
+    <div class="sec-line"></div>
+    <span class="sec-label">2026</span>
+  </div>
 
-        <!-- Sanat -->
-        <a href="sanat.html" class="activity-card card-orange">
-            <div class="activity-index">02</div>
-            <div class="activity-icon-wrap">
-                <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="24" cy="24" r="17" stroke="#c97b2a" stroke-width="1.5"/>
-                    <path d="M14 30 Q19 20 24 24 Q29 28 34 18" stroke="#c97b2a" stroke-width="1.5" stroke-linecap="round" fill="none"/>
-                    <circle cx="14" cy="30" r="2.5" fill="#c97b2a"/>
-                    <circle cx="34" cy="18" r="2.5" fill="#c97b2a"/>
-                </svg>
-            </div>
-            <h2 class="activity-title">Sanat Kursları</h2>
-            <p class="activity-desc">
-                Resim, Tiyatro, Bağlama, Gitar ve Keman eğitimleriyle iç dünyanızı estetik bir şekilde dışa vurun. 
-                Uzman eğitmenler eşliğinde sanatsal yeteneklerinizi keşfedin ve sahne özgüveni kazanın.
-            </p>
-            <div class="activity-link">
-                Detaylı Bilgi <span class="activity-link-arrow">→</span>
-            </div>
-        </a>
+  <main class="home-cards">
 
-        <!-- Geziler -->
-        <a href="geziler.html" class="activity-card card-blue">
-            <div class="activity-index">03</div>
-            <div class="activity-icon-wrap">
-                <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="24" cy="24" r="17" stroke="#1a3a6b" stroke-width="1.5"/>
-                    <ellipse cx="24" cy="24" rx="8" ry="17" stroke="#1a3a6b" stroke-width="1" opacity="0.4"/>
-                    <line x1="7" y1="24" x2="41" y2="24" stroke="#1a3a6b" stroke-width="1" opacity="0.4"/>
-                    <line x1="10" y1="16" x2="38" y2="16" stroke="#1a3a6b" stroke-width="1" opacity="0.25"/>
-                    <line x1="10" y1="32" x2="38" y2="32" stroke="#1a3a6b" stroke-width="1" opacity="0.25"/>
-                </svg>
-            </div>
-            <h2 class="activity-title">Bilim & Kültür Gezileri</h2>
-            <p class="activity-desc">
-                Öğrenmeyi sınıf duvarlarının ötesine taşıyın. Cumhuriyet, Sanat ve Doğa Bilim müzeleri ile tarihi 
-                Yerebatan Sarnıcı'na düzenlenen turlarla genel kültürünüzü zenginleştirin.
-            </p>
-            <div class="activity-link">
-                Detaylı Bilgi <span class="activity-link-arrow">→</span>
-            </div>
-        </a>
+    <!-- Akademik -->
+    <button class="hcard hc-red" onclick="go('akademik')">
+      <div class="hcard-idx">01</div>
+      <div class="hcard-icon">
+        <svg viewBox="0 0 52 52" fill="none">
+          <path d="M26 6C26 6 38 13 38 27C38 35 31 43 26 47C21 43 14 35 14 27C14 13 26 6 26 6Z" stroke="#c8402e" stroke-width="1.5" fill="none"/>
+          <ellipse cx="26" cy="29" rx="4.5" ry="4.5" stroke="#c8402e" stroke-width="1.4"/>
+          <path d="M14 31L8 37M38 31L44 37" stroke="#c8402e" stroke-width="1.2" stroke-linecap="round"/>
+          <path d="M21 45L19 49H33L31 45" stroke="#c8402e" stroke-width="1.2"/>
+        </svg>
+      </div>
+      <h2 class="hcard-title">Akademik Atölyeler</h2>
+      <p class="hcard-desc">Model Uçak, Model Gemi, Plastik Makyaj ve Green Box eğitimleriyle teorik bilginizi pratiğe dökün. Geleceğin mesleklerini deneyimleyin.</p>
+      <div class="hcard-link">Detaylı Bilgi <span class="hcard-link-arrow">→</span></div>
+    </button>
 
-        <!-- Dil -->
-        <a href="dil.html" class="activity-card card-violet">
-            <div class="activity-index">04</div>
-            <div class="activity-icon-wrap">
-                <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect x="6" y="10" width="22" height="16" rx="3" stroke="#6b2e8a" stroke-width="1.5"/>
-                    <path d="M28 18H42V30C42 31.65 40.65 33 39 33H28L22 38V33H..." stroke="#6b2e8a" stroke-width="1.5"/>
-                    <rect x="20" y="22" width="22" height="16" rx="3" stroke="#6b2e8a" stroke-width="1.5" fill="var(--paper)"/>
-                    <line x1="25" y1="28" x2="37" y2="28" stroke="#6b2e8a" stroke-width="1" opacity="0.5"/>
-                    <line x1="25" y1="32" x2="33" y2="32" stroke="#6b2e8a" stroke-width="1" opacity="0.5"/>
-                </svg>
-            </div>
-            <h2 class="activity-title">Yabancı Dil Kursları</h2>
-            <p class="activity-desc">
-                Ezberci sistemden uzak, tamamen pratik ve konuşma odaklı yabancı dil eğitimi alın. A1, A2 ve B1 
-                seviyelerinde uluslararası standartlara (CEFR) uygun olarak verilen dersleri keşfedin.
-            </p>
-            <div class="activity-link">
-                Detaylı Bilgi <span class="activity-link-arrow">→</span>
-            </div>
-        </a>
+    <!-- Sanat -->
+    <button class="hcard hc-orange" onclick="go('sanat')">
+      <div class="hcard-idx">02</div>
+      <div class="hcard-icon">
+        <svg viewBox="0 0 52 52" fill="none">
+          <circle cx="19" cy="21" r="11" stroke="#c97b2a" stroke-width="1.4"/>
+          <circle cx="33" cy="29" r="11" stroke="#c97b2a" stroke-width="1.4"/>
+          <path d="M15 24 Q19 29 23 24" stroke="#c97b2a" stroke-width="1.2" stroke-linecap="round" fill="none"/>
+          <path d="M29 33 Q33 28 37 33" stroke="#c97b2a" stroke-width="1.2" stroke-linecap="round" fill="none"/>
+          <circle cx="17" cy="19" r="1.3" fill="#c97b2a"/>
+          <circle cx="21" cy="19" r="1.3" fill="#c97b2a"/>
+          <circle cx="31" cy="27" r="1.3" fill="#c97b2a"/>
+          <circle cx="35" cy="27" r="1.3" fill="#c97b2a"/>
+        </svg>
+      </div>
+      <h2 class="hcard-title">Sanat Kursları</h2>
+      <p class="hcard-desc">Resim, Tiyatro, Bağlama, Gitar ve Keman eğitimleriyle iç dünyanızı dışa vurun. Uzman eğitmenlerle sanatsal kimlik kazanın.</p>
+      <div class="hcard-link">Detaylı Bilgi <span class="hcard-link-arrow">→</span></div>
+    </button>
 
-    </main>
+    <!-- Geziler -->
+    <button class="hcard hc-blue" onclick="go('geziler')">
+      <div class="hcard-idx">03</div>
+      <div class="hcard-icon">
+        <svg viewBox="0 0 52 52" fill="none">
+          <circle cx="26" cy="26" r="19" stroke="#1a3a6b" stroke-width="1.5"/>
+          <circle cx="26" cy="26" r="3.5" fill="#1a3a6b"/>
+          <path d="M26 9V16M26 36V43M9 26H16M36 26H43" stroke="#1a3a6b" stroke-width="1.3" stroke-linecap="round"/>
+          <path d="M20 20L26 23L32 17L26 30Z" stroke="#1a3a6b" stroke-width="1.3" fill="none" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <h2 class="hcard-title">Bilim & Kültür Gezileri</h2>
+      <p class="hcard-desc">Müzeler ve tarihi mekânlara turlarla genel kültürünüzü zenginleştirin. Öğrenmeyi sınıf duvarlarının ötesine taşıyın.</p>
+      <div class="hcard-link">Detaylı Bilgi <span class="hcard-link-arrow">→</span></div>
+    </button>
 
-    <!-- FOOTER -->
-    <footer>
-        <div class="footer-brand">Gençlik Merkezi</div>
-        <div class="footer-copy">© 2026 Küçükçekmece Belediyesi</div>
-        <div class="footer-dev">Geliştirici: <span>Bilişim Grubu</span></div>
-    </footer>
+    <!-- Dil -->
+    <button class="hcard hc-violet" onclick="go('dil')">
+      <div class="hcard-idx">04</div>
+      <div class="hcard-icon">
+        <svg viewBox="0 0 52 52" fill="none">
+          <rect x="5" y="8" width="26" height="18" rx="3" stroke="#6b2e8a" stroke-width="1.5"/>
+          <path d="M9 26L7 32L17 26" stroke="#6b2e8a" stroke-width="1.2" stroke-linejoin="round" fill="none"/>
+          <rect x="21" y="22" width="26" height="18" rx="3" stroke="#6b2e8a" stroke-width="1.5"/>
+          <path d="M43 40L45 46L35 40" stroke="#6b2e8a" stroke-width="1.2" stroke-linejoin="round" fill="none"/>
+          <line x1="11" y1="15" x2="25" y2="15" stroke="#6b2e8a" stroke-width="1" opacity=".5"/>
+          <line x1="11" y1="19" x2="21" y2="19" stroke="#6b2e8a" stroke-width="1" opacity=".5"/>
+          <line x1="27" y1="29" x2="41" y2="29" stroke="#6b2e8a" stroke-width="1" opacity=".5"/>
+          <line x1="27" y1="33" x2="37" y2="33" stroke="#6b2e8a" stroke-width="1" opacity=".5"/>
+        </svg>
+      </div>
+      <h2 class="hcard-title">Yabancı Dil Kursları</h2>
+      <p class="hcard-desc">Pratik ve konuşma odaklı dil eğitimi. A1, A2 ve B1 seviyelerinde CEFR standartlarına uygun dersler.</p>
+      <div class="hcard-link">Detaylı Bilgi <span class="hcard-link-arrow">→</span></div>
+    </button>
 
+  </main>
+
+  <footer>
+    <div class="f-brand">Gençlik Merkezi</div>
+    <div class="f-copy">© 2026 Küçükçekmece Belediyesi</div>
+    <div class="f-dev">Geliştirici: <span style="color:var(--c-blue-m)">Bilişim Grubu</span></div>
+  </footer>
+</div>
+
+
+<!-- ═══════════ AKADEMİK ═══════════ -->
+<div id="pg-akademik" class="page">
+  <header class="sub-masthead">
+    <button class="back-btn" style="color:var(--c-red)" onclick="go('home')">← Geri</button>
+    <div class="sub-logo">Akademik Atölyeler</div>
+    <div class="sub-tag">Gençlik Merkezi</div>
+  </header>
+
+  <section class="ak-hero">
+    <div>
+      <p class="ak-num">01 / 04 — Akademik Program</p>
+      <h1 class="ak-title">Geleceğin<br><em>meslekleri</em><br>burada</h1>
+    </div>
+    <p class="ak-desc">Model Uçak, Model Gemi, Plastik Makyaj ve Green Box eğitimleriyle teorik bilginizi pratiğe dökün. Havacılıktan dijital içerik üreticiliğine kadar her atölye bir kariyer kapısı aralıyor.</p>
+  </section>
+
+  <div class="info-strip">
+    <div class="info-cell"><div class="i-label">Atölye Sayısı</div><div class="i-val">4</div><div class="i-sub">Aktif program</div></div>
+    <div class="info-cell"><div class="i-label">Eğitim Türü</div><div class="i-val">Uyg.</div><div class="i-sub">Uygulama ağırlıklı</div></div>
+    <div class="info-cell"><div class="i-label">Hedef Kitle</div><div class="i-val">Genç</div><div class="i-sub">Tüm yaş grupları</div></div>
+  </div>
+
+  <div class="sec-rule">
+    <span class="sec-label">Atölyeler</span><div class="sec-line"></div><span class="sec-label">4 Program</span>
+  </div>
+
+  <main class="workshops">
+    <div class="ws">
+      <div class="ws-ico"><svg viewBox="0 0 44 44" fill="none"><path d="M8 22L38 10L29 22L38 34L8 22Z" stroke="#c8402e" stroke-width="1.4" stroke-linejoin="round" fill="none"/><path d="M29 22L16 27V33L21 29" stroke="#c8402e" stroke-width="1.2" stroke-linecap="round" fill="none"/></svg></div>
+      <div class="ws-idx">01</div>
+      <h2 class="ws-title">Model Uçak</h2>
+      <p class="ws-body">Havacılık mühendisliğinin temel prensiplerini öğrenin. Farklı malzemeler kullanarak kendi model uçaklarınızı tasarlayın, üretin ve uçurun. Aerodinamik, denge ve kontrol sistemleri üzerine pratik deneyim kazanın.</p>
+      <div class="tags"><span class="tag tg-r">Havacılık</span><span class="tag tg-r">Mühendislik</span><span class="tag tg-r">El Becerisi</span></div>
+    </div>
+    <div class="ws">
+      <div class="ws-ico"><svg viewBox="0 0 44 44" fill="none"><path d="M6 30L10 21H34L38 30H6Z" stroke="#c8402e" stroke-width="1.4" stroke-linejoin="round" fill="none"/><path d="M14 21V15H30V21" stroke="#c8402e" stroke-width="1.2" stroke-linecap="round" fill="none"/><rect x="18" y="15" width="8" height="6" stroke="#c8402e" stroke-width="1"/><path d="M6 30Q22 37 38 30" stroke="#c8402e" stroke-width="1.2" fill="none"/></svg></div>
+      <div class="ws-idx">02</div>
+      <h2 class="ws-title">Model Gemi</h2>
+      <p class="ws-body">Denizcilik tarihini ve gemi inşa tekniklerini keşfedin. Ahşap ve plastik malzemelerle tarihi gemi modellerini özgün detaylarıyla oluşturun. Sabır, hassasiyet ve teknik becerileri bir arada geliştirin.</p>
+      <div class="tags"><span class="tag tg-r">Denizcilik</span><span class="tag tg-r">Tarih</span><span class="tag tg-r">Maket</span></div>
+    </div>
+    <div class="ws">
+      <div class="ws-ico"><svg viewBox="0 0 44 44" fill="none"><ellipse cx="22" cy="22" rx="14" ry="16" stroke="#c8402e" stroke-width="1.4"/><path d="M16 27Q22 31 28 27" stroke="#c8402e" stroke-width="1.2" stroke-linecap="round" fill="none"/><circle cx="17" cy="20" r="2" stroke="#c8402e" stroke-width="1.2"/><circle cx="27" cy="20" r="2" stroke="#c8402e" stroke-width="1.2"/><path d="M22 6V4M10 14L8 12M34 14L36 12" stroke="#c8402e" stroke-width="1.2" stroke-linecap="round"/></svg></div>
+      <div class="ws-idx">03</div>
+      <h2 class="ws-title">Plastik Makyaj</h2>
+      <p class="ws-body">Film, tiyatro ve televizyon dünyasında kullanılan profesyonel prostetik ve özel efekt makyaj tekniklerini öğrenin. Karakter yaratma, yaş efektleri ve fantezi uygulamaları üzerine kapsamlı pratik eğitim alın.</p>
+      <div class="tags"><span class="tag tg-r">Sinema</span><span class="tag tg-r">Yaratıcılık</span><span class="tag tg-r">Sanat</span></div>
+    </div>
+    <div class="ws">
+      <div class="ws-ico"><svg viewBox="0 0 44 44" fill="none"><rect x="6" y="12" width="26" height="20" rx="2" stroke="#c8402e" stroke-width="1.4"/><path d="M32 19L39 14V30L32 26V19Z" stroke="#c8402e" stroke-width="1.2" stroke-linejoin="round" fill="none"/><circle cx="19" cy="22" r="5" stroke="#c8402e" stroke-width="1.2"/><circle cx="19" cy="22" r="2" fill="#c8402e" opacity=".35"/></svg></div>
+      <div class="ws-idx">04</div>
+      <h2 class="ws-title">Green Box</h2>
+      <p class="ws-body">Dijital içerik üretiminin sırlarını öğrenin. Yeşil perde teknolojisi, video düzenleme ve post-prodüksiyon süreçlerini uygulamalı olarak deneyimleyin. Sosyal medya içerikleri ve kısa filmler üretme becerisi kazanın.</p>
+      <div class="tags"><span class="tag tg-r">Dijital</span><span class="tag tg-r">Video</span><span class="tag tg-r">Teknoloji</span></div>
+    </div>
+  </main>
+
+  <div class="pull-q">
+    <div class="pull-bar" style="background:var(--c-red)"></div>
+    <p class="pull-text">"Teorik bilgi, <span style="color:var(--c-red)">uygulamayla buluştuğunda</span> gerçek bir beceriye dönüşür."</p>
+  </div>
+
+  <footer>
+    <div class="f-brand">Gençlik Merkezi</div>
+    <div class="f-copy">© 2026 Küçükçekmece Belediyesi</div>
+    <div class="f-dev">Geliştirici: <span style="color:var(--c-red)">Bilişim Grubu</span></div>
+  </footer>
+</div>
+
+
+<!-- ═══════════ SANAT ═══════════ -->
+<div id="pg-sanat" class="page">
+  <header class="sub-masthead">
+    <button class="back-btn" style="color:var(--c-orange)" onclick="go('home')">← Geri</button>
+    <div class="sub-logo">Sanat Kursları</div>
+    <div class="sub-tag">Gençlik Merkezi</div>
+  </header>
+
+  <section class="sa-hero">
+    <div>
+      <p class="sa-num">02 / 04 — Sanat Programı</p>
+      <h1 class="sa-title">İçindeki<br><em>sanatçıyı</em><br>keşfet</h1>
+    </div>
+    <p class="sa-desc">Resim, Tiyatro, Bağlama, Gitar ve Keman eğitimleriyle iç dünyanızı estetik bir şekilde dışa vurun. Uzman eğitmenler eşliğinde yeteneklerinizi keşfedin ve sahne özgüveni kazanın.</p>
+  </section>
+
+  <div class="info-strip">
+    <div class="info-cell"><div class="i-label">Kurs Sayısı</div><div class="i-val">5</div><div class="i-sub">Aktif program</div></div>
+    <div class="info-cell"><div class="i-label">Eğitim Alanı</div><div class="i-val">2</div><div class="i-sub">Görsel & Sahne sanatları</div></div>
+    <div class="info-cell"><div class="i-label">Eğitmen</div><div class="i-val">Uzman</div><div class="i-sub">Alanında deneyimli</div></div>
+  </div>
+
+  <div class="sec-rule">
+    <span class="sec-label">Kurslar</span><div class="sec-line"></div><span class="sec-label">5 Program</span>
+  </div>
+
+  <main class="courses">
+    <div class="course">
+      <div class="c-num">01</div>
+      <div class="c-left">
+        <div class="c-disc">Görsel Sanat</div>
+        <div class="c-ico"><svg viewBox="0 0 40 40" fill="none"><rect x="6" y="6" width="28" height="28" rx="2" stroke="#c97b2a" stroke-width="1.4"/><path d="M10 30Q16 20 20 24Q24 28 30 16" stroke="#c97b2a" stroke-width="1.3" stroke-linecap="round" fill="none"/><circle cx="10" cy="30" r="2" fill="#c97b2a"/><circle cx="30" cy="16" r="2" fill="#c97b2a"/></svg></div>
+        <h2 class="c-title">Resim</h2>
+      </div>
+      <div class="c-right">
+        <p class="c-body">Suluboya, akrilik ve yağlı boya tekniklerini keşfedin. Temel kompozisyon kurallarından başlayarak kendi özgün üslubunuzu geliştirin. Her seviyeye uygun ilerleyici müfredat ile sanatsal gözlem yeteneğinizi güçlendirin.</p>
+        <div class="tags"><span class="tag tg-o">Suluboya</span><span class="tag tg-o">Akrilik</span><span class="tag tg-o">Yağlıboya</span></div>
+      </div>
+    </div>
+    <div class="course">
+      <div class="c-num">02</div>
+      <div class="c-left">
+        <div class="c-disc">Sahne Sanatı</div>
+        <div class="c-ico"><svg viewBox="0 0 40 40" fill="none"><path d="M8 32V14C8 13 9 12 10 12H30C31 12 32 13 32 14V32" stroke="#c97b2a" stroke-width="1.4" stroke-linecap="round"/><path d="M4 32H36" stroke="#c97b2a" stroke-width="1.4" stroke-linecap="round"/><path d="M16 32V24H24V32" stroke="#c97b2a" stroke-width="1.2"/><line x1="12" y1="18" x2="16" y2="18" stroke="#c97b2a" stroke-width="1" opacity=".5"/><line x1="24" y1="18" x2="28" y2="18" stroke="#c97b2a" stroke-width="1" opacity=".5"/></svg></div>
+        <h2 class="c-title">Tiyatro</h2>
+      </div>
+      <div class="c-right">
+        <p class="c-body">Sahne tekniklerini, beden dilini ve ses kontrolünü profesyonel eğitmenler eşliğinde öğrenin. Doğaçlama, metin çalışması ve karakter analizi üzerine yoğun atölye çalışmalarıyla toplu performanslara hazırlanın.</p>
+        <div class="tags"><span class="tag tg-o">Doğaçlama</span><span class="tag tg-o">Beden Dili</span><span class="tag tg-o">Ses</span></div>
+      </div>
+    </div>
+    <div class="course">
+      <div class="c-num">03</div>
+      <div class="c-left">
+        <div class="c-disc">Müzik — Yaylı</div>
+        <div class="c-ico"><svg viewBox="0 0 40 40" fill="none"><ellipse cx="13" cy="29" rx="8" ry="6" stroke="#c97b2a" stroke-width="1.4"/><path d="M19 25L34 10" stroke="#c97b2a" stroke-width="1.4" stroke-linecap="round"/><path d="M26 16L28 18M30 12L32 14" stroke="#c97b2a" stroke-width="1" stroke-linecap="round"/><circle cx="13" cy="29" r="2" fill="#c97b2a" opacity=".35"/></svg></div>
+        <h2 class="c-title">Bağlama</h2>
+      </div>
+      <div class="c-right">
+        <p class="c-body">Anadolu müziğinin vazgeçilmez sazı bağlamayı temelden öğrenin. Perde pozisyonları, ritim kalıpları ve halk ezgileriyle başlayarak Türk müziğinin zengin kültürel mirasıyla bağ kurun.</p>
+        <div class="tags"><span class="tag tg-o">Halk Müziği</span><span class="tag tg-o">Ritim</span><span class="tag tg-o">Kültür</span></div>
+      </div>
+    </div>
+    <div class="course">
+      <div class="c-num">04</div>
+      <div class="c-left">
+        <div class="c-disc">Müzik — Telli</div>
+        <div class="c-ico"><svg viewBox="0 0 40 40" fill="none"><ellipse cx="20" cy="28" rx="9" ry="8" stroke="#c97b2a" stroke-width="1.4"/><path d="M20 20V8" stroke="#c97b2a" stroke-width="1.4" stroke-linecap="round"/><rect x="17" y="6" width="6" height="4" rx="1" stroke="#c97b2a" stroke-width="1.2"/><circle cx="20" cy="28" r="2.5" stroke="#c97b2a" stroke-width="1"/><line x1="14" y1="16" x2="26" y2="16" stroke="#c97b2a" stroke-width="1" opacity=".45"/></svg></div>
+        <h2 class="c-title">Gitar</h2>
+      </div>
+      <div class="c-right">
+        <p class="c-body">Akustik ve elektro gitar tekniklerini öğrenin. Akor yapıları, parmak egzersizleri ve tab okumadan başlayarak pop, rock ve klasik tarzlarda parçalar çalabilecek seviyeye ulaşın.</p>
+        <div class="tags"><span class="tag tg-o">Akustik</span><span class="tag tg-o">Elektro</span><span class="tag tg-o">Klasik</span></div>
+      </div>
+    </div>
+    <div class="course">
+      <div class="c-num">05</div>
+      <div class="c-left">
+        <div class="c-disc">Müzik — Yaylı</div>
+        <div class="c-ico"><svg viewBox="0 0 40 40" fill="none"><path d="M20 34C20 34 11 30 11 22C11 16 15 12 20 8C25 12 29 16 29 22C29 30 20 34 20 34Z" stroke="#c97b2a" stroke-width="1.4" fill="none"/><path d="M16 22C16 22 18 20 20 22C22 24 24 22 24 22" stroke="#c97b2a" stroke-width="1" stroke-linecap="round" fill="none"/><line x1="7" y1="14" x2="9" y2="12" stroke="#c97b2a" stroke-width="1.2" stroke-linecap="round"/><line x1="33" y1="14" x2="31" y2="12" stroke="#c97b2a" stroke-width="1.2" stroke-linecap="round"/></svg></div>
+        <h2 class="c-title">Keman</h2>
+      </div>
+      <div class="c-right">
+        <p class="c-body">Yaylı çalgıların kraliçesi kemanı sıfırdan öğrenin. Doğru tutuş, yay tekniği ve nota eğitimi ile başlayarak klasik ve çağdaş repertuara adım atın. Bireysel ve toplu çalma pratiği yapın.</p>
+        <div class="tags"><span class="tag tg-o">Klasik</span><span class="tag tg-o">Yay Tekniği</span><span class="tag tg-o">Nota</span></div>
+      </div>
+    </div>
+  </main>
+
+  <div class="accent-bar" style="background:var(--c-orange)">
+    <p class="ab-quote" style="color:#fff">"Sanat, kendinizi bulduğunuz ve kendinizi kaybettiğiniz yerdir."</p>
+    <p class="ab-cta" style="color:rgba(255,255,255,.65)">Her kurs, alanında uzman eğitmenler tarafından yürütülmektedir. Başlangıç seviyesinden ileri seviyeye tüm öğrencilere kapımız açıktır. Kayıt için merkeze başvurunuz.</p>
+  </div>
+
+  <footer>
+    <div class="f-brand">Gençlik Merkezi</div>
+    <div class="f-copy">© 2026 Küçükçekmece Belediyesi</div>
+    <div class="f-dev">Geliştirici: <span style="color:var(--c-orange)">Bilişim Grubu</span></div>
+  </footer>
+</div>
+
+
+<!-- ═══════════ GEZİLER ═══════════ -->
+<div id="pg-geziler" class="page">
+  <header class="sub-masthead">
+    <button class="back-btn" style="color:var(--c-blue-m)" onclick="go('home')">← Geri</button>
+    <div class="sub-logo">Bilim & Kültür Gezileri</div>
+    <div class="sub-tag">Gençlik Merkezi</div>
+  </header>
+
+  <section class="gz-hero">
+    <div class="gz-left">
+      <p class="gz-num">03 / 04 — Gezi Programı</p>
+      <h1 class="gz-title">Sınıf<br>duvarlarının<br><em>ötesi</em></h1>
+    </div>
+    <div class="gz-right">
+      <p class="gz-desc">Öğrenmeyi sınıf duvarlarının ötesine taşıyın. Müzelerden tarihi yapılara uzanan turlarla İstanbul'un zengin birikimini keşfedin. Her gezi bir ders; her mekân bir öğretmen.</p>
+      <div class="gz-stats">
+        <div><div class="gs-val">5</div><div class="gs-lbl">Destinasyon</div></div>
+        <div><div class="gs-val">İst.</div><div class="gs-lbl">Şehir içi</div></div>
+        <div><div class="gs-val">Ücretsiz</div><div class="gs-lbl">Katılım</div></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="sec-rule">
+    <span class="sec-label">Destinasyonlar</span><div class="sec-line"></div><span class="sec-label">5 Gezi</span>
+  </div>
+
+  <main class="dests">
+    <div class="dest">
+      <div class="d-ico"><svg viewBox="0 0 44 44" fill="none"><path d="M6 36H38M6 18H38" stroke="#1a3a6b" stroke-width="1.4" stroke-linecap="round"/><path d="M22 10L8 18H36L22 10Z" stroke="#1a3a6b" stroke-width="1.4" stroke-linejoin="round" fill="none"/><rect x="10" y="18" width="4" height="18" stroke="#1a3a6b" stroke-width="1.2"/><rect x="20" y="18" width="4" height="18" stroke="#1a3a6b" stroke-width="1.2"/><rect x="30" y="18" width="4" height="18" stroke="#1a3a6b" stroke-width="1.2"/></svg></div>
+      <div class="d-dot"></div>
+      <div class="d-idx">01</div>
+      <h2 class="d-title">Cumhuriyet Müzesi</h2>
+      <p class="d-body">Türkiye Cumhuriyeti'nin kuruluş sürecini ve modernleşme tarihini özgün belgeler, fotoğraflar ve eserler eşliğinde keşfedin.</p>
+      <div class="d-type">Tarih & Kültür</div>
+    </div>
+    <div class="dest">
+      <div class="d-ico"><svg viewBox="0 0 44 44" fill="none"><rect x="6" y="8" width="32" height="28" rx="2" stroke="#1a3a6b" stroke-width="1.4"/><rect x="10" y="12" width="24" height="20" rx="1" stroke="#1a3a6b" stroke-width="1" opacity=".35"/><path d="M12 28Q18 18 22 22Q26 26 32 16" stroke="#1a3a6b" stroke-width="1.3" stroke-linecap="round" fill="none"/><circle cx="14" cy="28" r="1.8" fill="#1a3a6b"/></svg></div>
+      <div class="d-dot"></div>
+      <div class="d-idx">02</div>
+      <h2 class="d-title">Sanat Müzesi</h2>
+      <p class="d-body">Türk ve dünya sanatının seçkin örneklerini barındıran bu müzede resim, heykel ve seramik eserlerini inceleyin.</p>
+      <div class="d-type">Görsel Sanatlar</div>
+    </div>
+    <div class="dest">
+      <div class="d-ico"><svg viewBox="0 0 44 44" fill="none"><path d="M22 36C22 36 8 28 8 16C8 10 14 6 22 8C30 6 36 10 36 16C36 28 22 36 22 36Z" stroke="#1a3a6b" stroke-width="1.4" fill="none"/><path d="M22 36V20" stroke="#1a3a6b" stroke-width="1.2" stroke-linecap="round"/><path d="M22 24Q28 20 32 14" stroke="#1a3a6b" stroke-width="1" opacity=".45" stroke-linecap="round"/><path d="M22 28Q16 24 12 18" stroke="#1a3a6b" stroke-width="1" opacity=".45" stroke-linecap="round"/></svg></div>
+      <div class="d-dot"></div>
+      <div class="d-idx">03</div>
+      <h2 class="d-title">Doğa Bilim Müzesi</h2>
+      <p class="d-body">Jeoloji, paleontoloji, botanik ve zooloji koleksiyonlarıyla doğanın milyonlarca yıllık hikâyesini keşfedin.</p>
+      <div class="d-type">Doğa Bilimleri</div>
+    </div>
+    <div class="dest">
+      <div class="d-ico"><svg viewBox="0 0 44 44" fill="none"><path d="M8 36V24C8 16 14 10 22 10C30 10 36 16 36 24V36" stroke="#1a3a6b" stroke-width="1.4" stroke-linecap="round" fill="none"/><line x1="8" y1="36" x2="36" y2="36" stroke="#1a3a6b" stroke-width="1.4" stroke-linecap="round"/><path d="M14 36V28C14 23 17 20 22 20C27 20 30 23 30 28V36" stroke="#1a3a6b" stroke-width="1" opacity=".45"/></svg></div>
+      <div class="d-dot"></div>
+      <div class="d-idx">04</div>
+      <h2 class="d-title">Yerebatan Sarnıcı</h2>
+      <p class="d-body">İstanbul'un tarihin derinliklerine uzanan bu olağanüstü yapısında Bizans mühendisliğini yerinde görün. 336 mermer sütunuyla desteklenen kadim yapı.</p>
+      <div class="d-type">Tarihi Miras</div>
+    </div>
+  </main>
+
+  <div class="hl-grid">
+    <div class="hl-dark">
+      <div class="hll-label">Neden Bu Geziler?</div>
+      <div class="hll-big">Canlı<br>Öğrenme</div>
+      <p class="hll-sub">Sınıf ortamında edinilen bilgiler, gerçek mekânlarda gözlemlendiğinde kalıcı bir deneyime dönüşür. Her gezi rehberli anlatım ve interaktif keşif sunar.</p>
+    </div>
+    <div class="hl-div"></div>
+    <div class="hl-light">
+      <div class="hll-d-label">Nasıl Katılırım?</div>
+      <div class="hll-big-d">"Gezi programları düzenli aralıklarla planlanmaktadır."</div>
+      <p class="hll-sub-d">Etkinlik takvimi için Gençlik Merkezi'ne bizzat başvurabilir ya da telefonla bilgi alabilirsiniz. Geziler ücretsizdir; önce gelen önce alır.</p>
+    </div>
+  </div>
+
+  <footer>
+    <div class="f-brand">Gençlik Merkezi</div>
+    <div class="f-copy">© 2026 Küçükçekmece Belediyesi</div>
+    <div class="f-dev">Geliştirici: <span style="color:var(--c-blue-m)">Bilişim Grubu</span></div>
+  </footer>
+</div>
+
+
+<!-- ═══════════ DİL ═══════════ -->
+<div id="pg-dil" class="page">
+  <header class="sub-masthead">
+    <button class="back-btn" style="color:var(--c-violet-m)" onclick="go('home')">← Geri</button>
+    <div class="sub-logo">Yabancı Dil Kursları</div>
+    <div class="sub-tag">Gençlik Merkezi</div>
+  </header>
+
+  <section class="dil-hero">
+    <p class="dil-num">04 / 04 — Dil Programı</p>
+    <h1 class="dil-title">Dünyayla<br><em>konuş</em></h1>
+    <div class="dil-btm">
+      <p class="dil-desc">Ezberci sistemden uzak, tamamen pratik ve konuşma odaklı yabancı dil eğitimi alın. Uluslararası CEFR standartlarına uygun üç seviyede sunulan derslerimiz sizi gerçek iletişim için hazırlar.</p>
+      <div class="cefr-wrap">
+        <div class="cefr-box"><div class="cefr-lv">A1</div><div class="cefr-lb">Başlangıç</div></div>
+        <div class="cefr-box"><div class="cefr-lv">A2</div><div class="cefr-lb">Temel</div></div>
+        <div class="cefr-box"><div class="cefr-lv">B1</div><div class="cefr-lb">Orta</div></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="sec-rule">
+    <span class="sec-label">Seviyeler</span><div class="sec-line"></div><span class="sec-label">CEFR Standartları</span>
+  </div>
+
+  <main class="levels">
+    <div class="lv">
+      <div class="lv-head">
+        <div class="lv-badge">A1</div>
+        <div class="lv-meta"><div class="lv-cefr">CEFR</div><div class="lv-name">Başlangıç</div></div>
+      </div>
+      <div class="lv-ico"><svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="13" stroke="#6b2e8a" stroke-width="1.4"/><path d="M14 20H26M20 14V26" stroke="#6b2e8a" stroke-width="1.2" stroke-linecap="round"/></svg></div>
+      <div class="prog-bar"><div class="prog-fill" style="width:25%"></div></div>
+      <h2 class="lv-title">İlk Adım</h2>
+      <p class="lv-desc">Hiç dil bilmeyenler için tasarlanmış bu seviyede günlük yaşamın en temel ifadelerini anlama ve kullanma becerisi kazanırsınız. Kendinizi tanıtabilir, selamlayabilir ve temel ihtiyaçlarınızı ifade edebilirsiniz.</p>
+      <div><div class="sk-row"><div class="sk-dot"></div>Temel selamlama ve tanışma</div><div class="sk-row"><div class="sk-dot"></div>Sayılar, renkler, günler</div><div class="sk-row"><div class="sk-dot"></div>Soru cümleleri kurma</div><div class="sk-row"><div class="sk-dot"></div>Kişisel bilgi aktarma</div></div>
+    </div>
+    <div class="lv">
+      <div class="lv-head">
+        <div class="lv-badge">A2</div>
+        <div class="lv-meta"><div class="lv-cefr">CEFR</div><div class="lv-name">Temel</div></div>
+      </div>
+      <div class="lv-ico"><svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="13" stroke="#6b2e8a" stroke-width="1.4"/><path d="M13 24Q20 14 27 24" stroke="#6b2e8a" stroke-width="1.3" stroke-linecap="round" fill="none"/><circle cx="20" cy="20" r="3" fill="#6b2e8a" opacity=".28"/></svg></div>
+      <div class="prog-bar"><div class="prog-fill" style="width:50%"></div></div>
+      <h2 class="lv-title">Temel İletişim</h2>
+      <p class="lv-desc">Günlük rutinleri ve tanıdık konuları anlayabilir, basit görevleri gerçekleştirebilirsiniz. Kısa sosyal ortamlarda iletişim kurar, geçmiş olayları anlatabilirsiniz.</p>
+      <div><div class="sk-row"><div class="sk-dot"></div>Alışveriş ve restoran diyalogları</div><div class="sk-row"><div class="sk-dot"></div>Geçmiş zaman kullanımı</div><div class="sk-row"><div class="sk-dot"></div>Yön tarif etme</div><div class="sk-row"><div class="sk-dot"></div>Kısa yazılı metin anlama</div></div>
+    </div>
+    <div class="lv">
+      <div class="lv-head">
+        <div class="lv-badge">B1</div>
+        <div class="lv-meta"><div class="lv-cefr">CEFR</div><div class="lv-name">Orta</div></div>
+      </div>
+      <div class="lv-ico"><svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="13" stroke="#6b2e8a" stroke-width="1.4"/><path d="M12 26Q16 14 20 18Q24 22 28 12" stroke="#6b2e8a" stroke-width="1.3" stroke-linecap="round" fill="none"/><circle cx="28" cy="12" r="2.5" fill="#6b2e8a"/></svg></div>
+      <div class="prog-bar"><div class="prog-fill" style="width:75%"></div></div>
+      <h2 class="lv-title">Bağımsız Kullanım</h2>
+      <p class="lv-desc">Tanıdık konularda açık ve standart dilde yapılan konuşmaların ana noktalarını anlayabilirsiniz. Seyahat ederken ortaya çıkan durumların üstesinden gelebilirsiniz.</p>
+      <div><div class="sk-row"><div class="sk-dot"></div>Görüş ve fikir belirtme</div><div class="sk-row"><div class="sk-dot"></div>Haber metinleri anlama</div><div class="sk-row"><div class="sk-dot"></div>Seyahat konuşmaları</div><div class="sk-row"><div class="sk-dot"></div>Paragraf düzeyinde yazma</div></div>
+    </div>
+  </main>
+
+  <div class="sec-rule">
+    <span class="sec-label">Eğitim Yöntemi</span><div class="sec-line"></div>
+  </div>
+
+  <section class="methods">
+    <div class="mth">
+      <div class="mth-ico"><svg viewBox="0 0 40 40" fill="none"><path d="M20 10C14 10 10 14 10 20C10 26 14 30 20 30" stroke="#6b2e8a" stroke-width="1.4" stroke-linecap="round"/><path d="M20 30C26 30 30 26 30 20C30 14 26 10 20 10" stroke="#6b2e8a" stroke-width="1" opacity=".35" stroke-linecap="round"/><path d="M16 15L24 20L16 25" stroke="#6b2e8a" stroke-width="1.3" stroke-linejoin="round" fill="none"/></svg></div>
+      <div class="mth-num">01</div>
+      <div class="mth-title">Konuşma Odaklı</div>
+      <p class="mth-desc">Konuşma korkusunu aşmanıza yardımcı olacak uygulamalı seanslar ve gerçek diyalog pratiği.</p>
+    </div>
+    <div class="mth">
+      <div class="mth-ico"><svg viewBox="0 0 40 40" fill="none"><rect x="8" y="8" width="24" height="24" rx="3" stroke="#6b2e8a" stroke-width="1.4"/><path d="M14 16H26M14 20H22M14 24H20" stroke="#6b2e8a" stroke-width="1.2" stroke-linecap="round" opacity=".5"/><path d="M27 23L31 19" stroke="#6b2e8a" stroke-width="1.2" stroke-linecap="round"/><circle cx="31" cy="19" r="2.5" stroke="#6b2e8a" stroke-width="1.2"/></svg></div>
+      <div class="mth-num">02</div>
+      <div class="mth-title">Ezber Yok</div>
+      <p class="mth-desc">Kural ezberlemek yerine bağlamsal öğrenme yöntemiyle dili doğal akışında kavrayın.</p>
+    </div>
+    <div class="mth">
+      <div class="mth-ico"><svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="13" stroke="#6b2e8a" stroke-width="1.4"/><path d="M20 10V14M20 26V30M10 20H14M26 20H30" stroke="#6b2e8a" stroke-width="1.1" stroke-linecap="round" opacity=".45"/><circle cx="20" cy="20" r="4" stroke="#6b2e8a" stroke-width="1.2"/></svg></div>
+      <div class="mth-num">03</div>
+      <div class="mth-title">CEFR Uyumlu</div>
+      <p class="mth-desc">Uluslararası Ortak Dil Referans Çerçevesi standartlarıyla hazırlanmış müfredat ve değerlendirme.</p>
+    </div>
+    <div class="mth">
+      <div class="mth-ico"><svg viewBox="0 0 40 40" fill="none"><circle cx="14" cy="16" r="5" stroke="#6b2e8a" stroke-width="1.4"/><circle cx="26" cy="16" r="5" stroke="#6b2e8a" stroke-width="1.4"/><path d="M8 34C8 28 11 26 14 26C17 26 20 28 20 28C20 28 23 26 26 26C29 26 32 28 32 34" stroke="#6b2e8a" stroke-width="1.2" stroke-linecap="round" fill="none"/></svg></div>
+      <div class="mth-num">04</div>
+      <div class="mth-title">Küçük Gruplar</div>
+      <p class="mth-desc">Sınıf mevcudu sınırlı tutulur. Her öğrenci kişisel ilgi ve konuşma fırsatı bulur.</p>
+    </div>
+  </section>
+
+  <footer>
+    <div class="f-brand">Gençlik Merkezi</div>
+    <div class="f-copy">© 2026 Küçükçekmece Belediyesi</div>
+    <div class="f-dev">Geliştirici: <span style="color:var(--c-violet-m)">Bilişim Grubu</span></div>
+  </footer>
+</div>
+
+<script>
+function go(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('pg-' + page).classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
 </body>
 </html>
