@@ -3,210 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Küçükçekmece Belediyesi Gençlik Merkezi</title>
+    <title>Küçükçekmece Gençlik Merkezi - Dijital Sergi</title>
     <style>
-        /* Genel Stiller */
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f7f6;
-            color: #333;
-            line-height: 1.6;
-        }
-
-        /* Başlık Kısmı */
-        header {
-            background-color: #0056b3;
-            color: #ffffff;
-            padding: 40px 20px;
-            text-align: center;
-        }
-
-        header h1 {
-            margin: 0;
-            font-size: 2.5em;
-        }
-
-        header p {
-            margin-top: 10px;
-            font-size: 1.2em;
-            opacity: 0.9;
-        }
-
-        /* Menü Stilleri */
-        nav {
-            display: flex;
-            justify-content: center;
-            background-color: #2c3e50;
-            flex-wrap: wrap;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-
-        nav a {
-            color: white;
-            padding: 15px 20px;
-            text-decoration: none;
-            font-weight: bold;
-            transition: background-color 0.3s;
-        }
-
-        nav a:hover {
-            background-color: #1a252f;
-            color: #f39c12;
-        }
-
-        /* İçerik Konteyneri */
-        .container {
-            max-width: 1000px;
-            margin: 40px auto;
-            padding: 0 20px;
-        }
-
-        /* Kurs Kartları */
-        .course-card {
-            background: #ffffff;
-            margin-bottom: 30px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            overflow: hidden;
-            transition: transform 0.3s ease;
-        }
-
-        .course-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .course-content {
-            padding: 25px;
-        }
-
-        .course-card h2 {
-            color: #0056b3;
-            margin-top: 0;
-            border-bottom: 2px solid #ecf0f1;
-            padding-bottom: 10px;
-        }
-
-        /* Görsel Ekleme Alanı */
-        .image-placeholder {
-            width: 100%;
-            height: 250px;
-            background-color: #e9ecef;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #6c757d;
-            font-size: 1.1em;
-            font-weight: bold;
-            border-bottom: 1px solid #dee2e6;
-            /* Görsel eklemek için yukarıdaki satırları silip arka plan resmi atayabilir veya <img> etiketi kullanabilirsin */
-        }
-
-        /* Alt Bilgi */
-        footer {
-            background-color: #2c3e50;
-            color: white;
-            text-align: center;
-            padding: 20px 0;
-            margin-top: 50px;
-        }
-
-        footer p {
-            margin: 0;
-            font-size: 0.9em;
-            color: #bdc3c7;
-        }
-
-        /* Mobil Uyumluluk */
-        @media (max-width: 768px) {
-            nav {
-                flex-direction: column;
-            }
-            nav a {
-                text-align: center;
-                border-bottom: 1px solid #34495e;
-            }
-            header h1 {
-                font-size: 2em;
-            }
-        }
+        :root { --primary: #0056b3; --dark: #2c3e50; --light: #f4f7f6; }
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: var(--light); color: #333; }
+        header { background: var(--primary); color: white; padding: 60px 20px; text-align: center; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; padding: 40px; max-width: 1200px; margin: auto; }
+        .card { background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 20px rgba(0,0,0,0.1); transition: 0.3s; cursor: pointer; text-decoration: none; color: inherit; }
+        .card:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(0,0,0,0.2); }
+        .card-img { height: 200px; background: #ddd; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #666; }
+        .card-body { padding: 20px; }
+        .card-body h2 { margin: 0 0 10px 0; color: var(--primary); }
+        .btn { display: inline-block; margin-top: 10px; color: var(--primary); font-weight: bold; }
+        footer { background: var(--dark); color: white; text-align: center; padding: 20px; margin-top: 40px; }
     </style>
 </head>
 <body>
-
     <header>
         <h1>Küçükçekmece Belediyesi Gençlik Merkezi</h1>
-        <p>Geleceğin Yetenekleri Burada Yetişiyor</p>
+        <p>Geleceğin Yetenekleri Dijital Sergisine Hoş Geldiniz</p>
     </header>
 
-    <nav>
-        <a href="#resim">Resim</a>
-        <a href="#drama">Drama & Tiyatro</a>
-        <a href="#yetenek">Yetenek Atölyesi</a>
-        <a href="#diksiyon">Diksiyon</a>
-        <a href="#ingilizce">İngilizce</a>
-        <a href="#yks">YKS Hazırlık</a>
-    </nav>
-
-    <div class="container">
-
-        <div id="resim" class="course-card">
-            <div class="image-placeholder">[Resim Kursu Görseli Buraya Gelecek]</div>
-            <div class="course-content">
-                <h2>Resim Kursu</h2>
-                <p>Hayal dünyanızı tuvale yansıtın! Temel çizim tekniklerinden, karakalem ve yağlı boyaya kadar sanatın inceliklerini uzman eğitmenlerimiz eşliğinde öğrenin. Hem stres atın hem de sanatsal vizyonunuzu geliştirin.</p>
+    <div class="grid">
+        <a href="resim.html" class="card">
+            <div class="card-img">RESİM ATÖLYESİ</div>
+            <div class="card-body">
+                <h2>Resim</h2>
+                <p>Renklerin ve çizgilerin dünyasını keşfedin...</p>
+                <span class="btn">Detayları Gör →</span>
             </div>
-        </div>
-
-        <div id="drama" class="course-card">
-            <div class="image-placeholder">[Drama ve Tiyatro Görseli Buraya Gelecek]</div>
-            <div class="course-content">
-                <h2>Drama (Tiyatro) Eğitimi</h2>
-                <p>Sahne senin! Kendini ifade etme yeteneğini geliştir, beden dilini etkili kullan ve tiyatronun büyülü dünyasına adım at. Özgüven kazandıran doğaçlama ve rol yapma çalışmalarıyla sosyal becerilerinizi güçlendirin.</p>
+        </a>
+        <a href="drama.html" class="card">
+            <div class="card-img">DRAMA & TİYATRO</div>
+            <div class="card-body">
+                <h2>Drama</h2>
+                <p>Sahne tozunu yutmaya hazır mısınız?</p>
+                <span class="btn">Detayları Gör →</span>
             </div>
-        </div>
-
-        <div id="yetenek" class="course-card">
-            <div class="image-placeholder">[Yetenek Atölyesi Görseli Buraya Gelecek]</div>
-            <div class="course-content">
+        </a>
+        <a href="yetenek.html" class="card">
+            <div class="card-img">YETENEK ATÖLYESİ</div>
+            <div class="card-body">
                 <h2>Yetenek Atölyesi</h2>
-                <p>İçindeki potansiyeli keşfet! Farklı el sanatları, teknolojik tasarımlar ve yaratıcı projelerle yeteneklerini ortaya çıkararak kendini çok yönlü bir şekilde geliştir.</p>
+                <p>El becerilerinizi sanata dönüştürün...</p>
+                <span class="btn">Detayları Gör →</span>
             </div>
-        </div>
-
-        <div id="diksiyon" class="course-card">
-            <div class="image-placeholder">[Diksiyon Kursu Görseli Buraya Gelecek]</div>
-            <div class="course-content">
-                <h2>Diksiyon Kursu</h2>
-                <p>Etkili ve güzel konuşmanın sırlarını öğrenin. Ses ve nefes teknikleri, doğru vurgu, tonlama ve artikülasyon çalışmaları ile kendinizi her ortamda en iyi şekilde ifade edin.</p>
+        </a>
+        <a href="diksiyon.html" class="card">
+            <div class="card-img">DİKSİYON KURSU</div>
+            <div class="card-body">
+                <h2>Diksiyon</h2>
+                <p>Etkili ve güzel konuşmanın anahtarı...</p>
+                <span class="btn">Detayları Gör →</span>
             </div>
-        </div>
-
-        <div id="ingilizce" class="course-card">
-            <div class="image-placeholder">[İngilizce Kursu Görseli Buraya Gelecek]</div>
-            <div class="course-content">
-                <h2>İngilizce Kursu</h2>
-                <p>Dünyaya açılan kapı! Pratik odaklı eğitim modelimizle İngilizce okuma, yazma, dinleme ve konuşma becerilerinizi geliştirin. Küresel iletişimde bir adım öne geçin.</p>
+        </a>
+        <a href="ingilizce.html" class="card">
+            <div class="card-img">İNGİLİZCE KURSU</div>
+            <div class="card-body">
+                <h2>İngilizce</h2>
+                <p>Yeni bir dil, yeni bir dünya...</p>
+                <span class="btn">Detayları Gör →</span>
             </div>
-        </div>
-
-        <div id="yks" class="course-card">
-            <div class="image-placeholder">[YKS Hazırlık Kursu Görseli Buraya Gelecek]</div>
-            <div class="course-content">
-                <h2>YKS Hazırlık Kursu</h2>
-                <p>Üniversite hayallerinize giden yolda yanınızdayız! Uzman kadromuz, düzenli deneme sınavları ve net arttıran nokta atışı hap bilgilerle dolu ders kaynaklarımızla hedeflerinize güvenle ulaşın.</p>
+        </a>
+        <a href="yks.html" class="card">
+            <div class="card-img">YKS HAZIRLIK</div>
+            <div class="card-body">
+                <h2>YKS Hazırlık</h2>
+                <p>Hedeflediğiniz üniversiteye giden yol...</p>
+                <span class="btn">Detayları Gör →</span>
             </div>
-        </div>
-
+        </a>
     </div>
 
     <footer>
         <p>Geliştirici: Esmanur Çaça</p>
-        <p>&copy; 2026 Küçükçekmece Gençlik Merkezi Sergi Projesi</p>
+        <p>Küçükçekmece Belediyesi Gençlik Merkezi Dijital Portfolyo</p>
     </footer>
-
 </body>
 </html>
