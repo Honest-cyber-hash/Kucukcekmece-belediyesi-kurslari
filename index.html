@@ -3,106 +3,602 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gençlik Merkezi Faaliyetleri</title>
+    <title>Gençlik Merkezi — Küçükçekmece</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Poppins', sans-serif; background: linear-gradient(135deg, #0a192f 0%, #112240 100%); background-attachment: fixed; color: #e6f1ff; line-height: 1.6; min-height: 100vh; display: flex; flex-direction: column; }
-        
-        header { text-align: center; padding: 70px 20px 30px 20px; }
-        header h1 { font-size: 2.8em; font-weight: 700; background: linear-gradient(to right, #64ffda, #4cc9f0); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 10px; }
-        header p { font-size: 1.1em; color: #8892b0; font-weight: 300; letter-spacing: 2px; text-transform: uppercase; }
+        :root {
+            --ink: #0e0e0e;
+            --paper: #f5f0e8;
+            --paper-warm: #ede8dd;
+            --accent: #c8402e;
+            --accent2: #1a3a6b;
+            --muted: #7a7368;
+            --rule: rgba(14,14,14,0.12);
+        }
 
-        .grid-container { max-width: 1200px; margin: 40px auto; padding: 0 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; flex-grow: 1; }
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
-        .card { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 20px; padding: 40px 30px; text-align: center; text-decoration: none; transition: all 0.4s ease; display: flex; flex-direction: column; align-items: center; position: relative; overflow: hidden; }
-        .card::before { content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%; background: linear-gradient(to right, transparent, rgba(255,255,255,0.05), transparent); transform: skewX(-20deg); transition: all 0.7s ease; }
-        .card:hover { transform: translateY(-12px); background: rgba(255, 255, 255, 0.06); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4); }
-        .card:hover::before { left: 200%; }
+        html { scroll-behavior: smooth; }
 
-        .card-icon { font-size: 3.5em; margin-bottom: 25px; transition: transform 0.3s ease; }
-        .card:hover .card-icon { transform: scale(1.15); }
-        .card-title { font-size: 1.4em; font-weight: 700; margin-bottom: 15px; }
-        .card-desc { font-size: 0.95em; color: #a8b2d1; font-weight: 300; line-height: 1.6; text-align: justify; margin-bottom: 25px; flex-grow: 1; }
-        .read-more { display: inline-block; padding: 8px 20px; font-size: 0.9em; font-weight: 600; border-radius: 50px; transition: all 0.3s ease; }
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background-color: var(--paper);
+            color: var(--ink);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
 
-        /* RENK TEMALARI */
-        /* Kırmızı Tema (Akademik) */
-        .theme-red:hover { border-color: rgba(255, 107, 107, 0.4); }
-        .theme-red .card-icon { color: #ff6b6b; text-shadow: 0 0 15px rgba(255, 107, 107, 0.4); }
-        .theme-red .card-title { color: #ff8e8e; }
-        .theme-red .read-more { color: #ff6b6b; border: 1px solid rgba(255, 107, 107, 0.3); }
-        .theme-red:hover .read-more { background: rgba(255, 107, 107, 0.1); box-shadow: 0 0 15px rgba(255, 107, 107, 0.3); }
+        /* --- NOISE TEXTURE OVERLAY --- */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 999;
+            opacity: 0.5;
+        }
 
-        /* Turuncu Tema (Sanat) */
-        .theme-orange:hover { border-color: rgba(252, 163, 17, 0.4); }
-        .theme-orange .card-icon { color: #fca311; text-shadow: 0 0 15px rgba(252, 163, 17, 0.4); }
-        .theme-orange .card-title { color: #ffd166; }
-        .theme-orange .read-more { color: #fca311; border: 1px solid rgba(252, 163, 17, 0.3); }
-        .theme-orange:hover .read-more { background: rgba(252, 163, 17, 0.1); box-shadow: 0 0 15px rgba(252, 163, 17, 0.3); }
+        /* --- MASTHEAD --- */
+        .masthead {
+            border-bottom: 2px solid var(--ink);
+            padding: 0 48px;
+            display: flex;
+            align-items: stretch;
+            height: 64px;
+        }
 
-        /* Mavi Tema (Geziler) */
-        .theme-blue:hover { border-color: rgba(76, 201, 240, 0.4); }
-        .theme-blue .card-icon { color: #4cc9f0; text-shadow: 0 0 15px rgba(76, 201, 240, 0.4); }
-        .theme-blue .card-title { color: #90e0ef; }
-        .theme-blue .read-more { color: #4cc9f0; border: 1px solid rgba(76, 201, 240, 0.3); }
-        .theme-blue:hover .read-more { background: rgba(76, 201, 240, 0.1); box-shadow: 0 0 15px rgba(76, 201, 240, 0.3); }
+        .masthead-label {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 10px;
+            font-weight: 500;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--muted);
+            display: flex;
+            align-items: center;
+            padding-right: 24px;
+            border-right: 1px solid var(--rule);
+        }
 
-        /* Mor Tema (Dil) */
-        .theme-purple:hover { border-color: rgba(181, 23, 158, 0.4); }
-        .theme-purple .card-icon { color: #b5179e; text-shadow: 0 0 15px rgba(181, 23, 158, 0.4); }
-        .theme-purple .card-title { color: #f72585; }
-        .theme-purple .read-more { color: #f72585; border: 1px solid rgba(181, 23, 158, 0.3); }
-        .theme-purple:hover .read-more { background: rgba(181, 23, 158, 0.1); box-shadow: 0 0 15px rgba(181, 23, 158, 0.3); }
+        .masthead-logo {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 32px;
+            letter-spacing: 0.04em;
+            color: var(--ink);
+            display: flex;
+            align-items: center;
+            padding-left: 24px;
+            flex: 1;
+        }
 
-        footer { text-align: center; padding: 30px 20px; font-size: 0.85em; color: #8892b0; border-top: 1px solid rgba(255,255,255,0.05); background: rgba(10, 25, 47, 0.5); }
-        .dev-name { color: #4cc9f0; font-weight: 600; letter-spacing: 1px; }
+        .masthead-nav {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+
+        .masthead-nav a {
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            text-decoration: none;
+            color: var(--muted);
+            transition: color 0.2s;
+        }
+        .masthead-nav a:hover { color: var(--accent); }
+
+        /* --- HERO --- */
+        .hero {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            border-bottom: 1px solid var(--ink);
+            min-height: 460px;
+        }
+
+        .hero-left {
+            padding: 60px 48px;
+            border-right: 1px solid var(--ink);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .hero-eyebrow {
+            font-size: 10px;
+            font-weight: 500;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 24px;
+        }
+
+        .hero-headline {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(72px, 9vw, 128px);
+            line-height: 0.9;
+            letter-spacing: -0.01em;
+            color: var(--ink);
+        }
+
+        .hero-headline em {
+            font-family: 'DM Serif Display', serif;
+            font-style: italic;
+            color: var(--accent);
+        }
+
+        .hero-subline {
+            font-size: 13px;
+            font-weight: 300;
+            color: var(--muted);
+            letter-spacing: 0.04em;
+            line-height: 1.7;
+            max-width: 360px;
+            margin-top: 32px;
+        }
+
+        .hero-right {
+            position: relative;
+            background-color: var(--accent2);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-right-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1px;
+            background: rgba(255,255,255,0.1);
+            width: 100%;
+            height: 100%;
+        }
+
+        .hero-stat {
+            background: var(--accent2);
+            padding: 40px 36px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            transition: background 0.3s;
+        }
+        .hero-stat:hover { background: rgba(255,255,255,0.06); }
+
+        .hero-stat-number {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 64px;
+            line-height: 1;
+            color: #fff;
+            letter-spacing: 0.02em;
+        }
+
+        .hero-stat-label {
+            font-size: 11px;
+            font-weight: 300;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.5);
+            margin-top: 8px;
+        }
+
+        /* --- SECTION DIVIDER --- */
+        .section-header {
+            padding: 20px 48px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            border-bottom: 1px solid var(--rule);
+        }
+
+        .section-header-label {
+            font-size: 10px;
+            font-weight: 500;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--muted);
+            white-space: nowrap;
+        }
+
+        .section-header-line {
+            flex: 1;
+            height: 1px;
+            background: var(--rule);
+        }
+
+        /* --- ACTIVITIES GRID --- */
+        .activities {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+        }
+
+        .activity-card {
+            border-right: 1px solid var(--ink);
+            border-bottom: 1px solid var(--ink);
+            padding: 40px 32px 36px;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+            transition: background 0.3s;
+            min-height: 380px;
+        }
+
+        .activity-card:last-child { border-right: none; }
+
+        .activity-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 3px;
+            width: 0;
+            transition: width 0.4s ease;
+        }
+
+        .activity-card:hover { background: var(--paper-warm); }
+        .activity-card:hover::after { width: 100%; }
+
+        .card-red::after    { background: #c8402e; }
+        .card-orange::after { background: #c97b2a; }
+        .card-blue::after   { background: #1a3a6b; }
+        .card-violet::after { background: #6b2e8a; }
+
+        .activity-index {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 48px;
+            line-height: 1;
+            color: var(--rule);
+            margin-bottom: 32px;
+            letter-spacing: 0.04em;
+        }
+
+        .activity-icon-wrap {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 20px;
+        }
+
+        .activity-icon-wrap svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .activity-title {
+            font-family: 'DM Serif Display', serif;
+            font-size: 22px;
+            line-height: 1.2;
+            color: var(--ink);
+            margin-bottom: 16px;
+        }
+
+        .activity-desc {
+            font-size: 13px;
+            font-weight: 300;
+            color: var(--muted);
+            line-height: 1.75;
+            flex: 1;
+        }
+
+        .activity-link {
+            margin-top: 28px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+        }
+
+        .card-red    .activity-link { color: #c8402e; }
+        .card-orange .activity-link { color: #c97b2a; }
+        .card-blue   .activity-link { color: #1a3a6b; }
+        .card-violet .activity-link { color: #6b2e8a; }
+
+        .activity-link-arrow {
+            display: inline-block;
+            transition: transform 0.2s;
+        }
+        .activity-card:hover .activity-link-arrow { transform: translateX(4px); }
+
+        /* --- MARQUEE TICKER --- */
+        .ticker {
+            border-top: 1px solid var(--ink);
+            border-bottom: 1px solid var(--ink);
+            background: var(--ink);
+            overflow: hidden;
+            white-space: nowrap;
+            padding: 14px 0;
+        }
+
+        .ticker-inner {
+            display: inline-flex;
+            animation: ticker-scroll 28s linear infinite;
+        }
+
+        .ticker-item {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 20px;
+            letter-spacing: 0.08em;
+            color: var(--paper);
+            padding: 0 48px;
+        }
+
+        .ticker-dot {
+            color: var(--accent);
+            margin-right: 48px;
+        }
+
+        @keyframes ticker-scroll {
+            from { transform: translateX(0); }
+            to { transform: translateX(-50%); }
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            border-top: 2px solid var(--ink);
+            padding: 28px 48px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .footer-brand {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 20px;
+            letter-spacing: 0.06em;
+            color: var(--ink);
+        }
+
+        .footer-copy {
+            font-size: 11px;
+            font-weight: 300;
+            color: var(--muted);
+            letter-spacing: 0.06em;
+        }
+
+        .footer-dev {
+            font-size: 11px;
+            color: var(--muted);
+            letter-spacing: 0.06em;
+        }
+
+        .footer-dev span {
+            font-weight: 500;
+            color: var(--accent2);
+        }
+
+        /* --- ANIMATIONS --- */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero-eyebrow  { animation: fadeUp 0.6s ease both 0.1s; }
+        .hero-headline { animation: fadeUp 0.6s ease both 0.2s; }
+        .hero-subline  { animation: fadeUp 0.6s ease both 0.35s; }
+        .hero-stat:nth-child(1) { animation: fadeUp 0.5s ease both 0.4s; }
+        .hero-stat:nth-child(2) { animation: fadeUp 0.5s ease both 0.5s; }
+        .hero-stat:nth-child(3) { animation: fadeUp 0.5s ease both 0.6s; }
+        .hero-stat:nth-child(4) { animation: fadeUp 0.5s ease both 0.7s; }
+
+        .activity-card {
+            animation: fadeUp 0.5s ease both;
+        }
+        .activity-card:nth-child(1) { animation-delay: 0.5s; }
+        .activity-card:nth-child(2) { animation-delay: 0.6s; }
+        .activity-card:nth-child(3) { animation-delay: 0.7s; }
+        .activity-card:nth-child(4) { animation-delay: 0.8s; }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 900px) {
+            .masthead { padding: 0 24px; }
+            .masthead-nav { display: none; }
+            .hero { grid-template-columns: 1fr; min-height: auto; }
+            .hero-left { padding: 40px 24px; border-right: none; border-bottom: 1px solid var(--ink); }
+            .hero-right { min-height: 260px; }
+            .hero-right-grid { grid-template-columns: 1fr 1fr; }
+            .hero-stat { padding: 24px; }
+            .hero-stat-number { font-size: 44px; }
+            .activities { grid-template-columns: 1fr 1fr; }
+            .activity-card:nth-child(2) { border-right: none; }
+            .activity-card:nth-child(3) { border-right: 1px solid var(--ink); }
+            .section-header { padding: 16px 24px; }
+            footer { padding: 20px 24px; flex-direction: column; gap: 10px; text-align: center; }
+        }
+
+        @media (max-width: 540px) {
+            .activities { grid-template-columns: 1fr; }
+            .activity-card { border-right: none; min-height: auto; }
+            .activity-card:nth-child(3) { border-right: none; }
+            .hero-headline { font-size: 72px; }
+        }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>Gençlik Merkezi</h1>
-        <p>Geleceğe Değer Katan Faaliyetler</p>
+    <!-- MASTHEAD -->
+    <header class="masthead">
+        <div class="masthead-label">Küçükçekmece Belediyesi</div>
+        <div class="masthead-logo">Gençlik Merkezi</div>
+        <nav class="masthead-nav">
+            <a href="akademik.html">Akademik</a>
+            <a href="sanat.html">Sanat</a>
+            <a href="geziler.html">Geziler</a>
+            <a href="dil.html">Dil</a>
+        </nav>
     </header>
 
-    <div class="grid-container">
-        <a href="akademik.html" class="card theme-red">
-            <i class="fas fa-rocket card-icon"></i>
-            <h2 class="card-title">Akademik Atölyeler</h2>
-            <p class="card-desc">Model Uçak, Model Gemi, Plastik Makyaj ve Green Box eğitimleriyle teorik bilginizi pratiğe dökün. Havacılıktan dijital içerik üreticiliğine kadar geleceğin mesleklerini deneyimleyin.</p>
-            <span class="read-more">Detaylı Bilgi →</span>
-        </a>
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-left">
+            <div>
+                <p class="hero-eyebrow">Geleceğe Değer Katan Faaliyetler</p>
+                <h1 class="hero-headline">Gen<em>çlik</em><br>Merkezi</h1>
+            </div>
+            <p class="hero-subline">
+                Sanat, bilim, kültür ve dil alanlarında düzenlenen atölyeler, kurslar ve gezilerle 
+                potansiyelinizin sınırlarını zorlayın. Her aktivite, geleceğinize bir yatırım.
+            </p>
+        </div>
+        <div class="hero-right">
+            <div class="hero-right-grid">
+                <div class="hero-stat">
+                    <div class="hero-stat-number">4</div>
+                    <div class="hero-stat-label">Faaliyet Alanı</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="hero-stat-number">12+</div>
+                    <div class="hero-stat-label">Aktif Kurs</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="hero-stat-number">A1–B1</div>
+                    <div class="hero-stat-label">CEFR Dil Seviyeleri</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="hero-stat-number">5</div>
+                    <div class="hero-stat-label">Kültür Gezisi</div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-        <a href="sanat.html" class="card theme-orange">
-            <i class="fas fa-masks-theater card-icon"></i>
-            <h2 class="card-title">Sanat Kursları</h2>
-            <p class="card-desc">Resim, Tiyatro, Bağlama, Gitar ve Keman eğitimleriyle iç dünyanızı estetik bir şekilde dışa vurun. Uzman eğitmenler eşliğinde sanatsal yeteneklerinizi keşfedin ve sahne özgüveni kazanın.</p>
-            <span class="read-more">Detaylı Bilgi →</span>
-        </a>
-
-        <a href="geziler.html" class="card theme-blue">
-            <i class="fas fa-compass card-icon"></i>
-            <h2 class="card-title">Bilim & Kültür Gezileri</h2>
-            <p class="card-desc">Öğrenmeyi sınıf duvarlarının ötesine taşıyın. Cumhuriyet, Sanat ve Doğa Bilim müzeleri ile tarihi Yerebatan Sarnıcı'na düzenlenen turlarla genel kültürünüzü zenginleştirin.</p>
-            <span class="read-more">Detaylı Bilgi →</span>
-        </a>
-
-        <a href="dil.html" class="card theme-purple">
-            <i class="fas fa-earth-americas card-icon"></i>
-            <h2 class="card-title">Yabancı Dil Kursları</h2>
-            <p class="card-desc">Ezberci sistemden uzak, tamamen pratik ve konuşma odaklı yabancı dil eğitimi alın. A1, A2 ve B1 seviyelerinde uluslararası standartlara (CEFR) uygun olarak verilen dersleri keşfedin.</p>
-            <span class="read-more">Detaylı Bilgi →</span>
-        </a>
+    <!-- TICKER -->
+    <div class="ticker" aria-hidden="true">
+        <div class="ticker-inner">
+            <span class="ticker-item">Model Uçak <span class="ticker-dot">✦</span></span>
+            <span class="ticker-item">Tiyatro <span class="ticker-dot">✦</span></span>
+            <span class="ticker-item">Gitar & Keman <span class="ticker-dot">✦</span></span>
+            <span class="ticker-item">Yabancı Dil <span class="ticker-dot">✦</span></span>
+            <span class="ticker-item">Green Box <span class="ticker-dot">✦</span></span>
+            <span class="ticker-item">Bağlama <span class="ticker-dot">✦</span></span>
+            <span class="ticker-item">Müze Gezileri <span class="ticker-dot">✦</span></span>
+            <span class="ticker-item">Model Gemi <span class="ticker-dot">✦</span></span>
+            <span class="ticker-item">Plastik Makyaj <span class="ticker-dot">✦</span></span>
+            <span class="ticker-item">Resim <span class="ticker-dot">✦</span></span>
+            <!-- duplicate for seamless loop -->
+            <span class="ticker-item">Model Uçak <span class="ticker-dot">✦</span></span>
+            <span class="ticker-item">Tiyatro <span class="ticker-dot">✦</span></span>
+            <span class="ticker-item">Gitar & Keman <span class="ticker-dot">✦</span></span>
+            <span class="ticker-item">Yabancı Dil <span class="ticker-dot">✦</span></span>
+            <span class="ticker-item">Green Box <span class="ticker-dot">✦</span></span>
+            <span class="ticker-item">Bağlama <span class="ticker-dot">✦</span></span>
+            <span class="ticker-item">Müze Gezileri <span class="ticker-dot">✦</span></span>
+            <span class="ticker-item">Model Gemi <span class="ticker-dot">✦</span></span>
+            <span class="ticker-item">Plastik Makyaj <span class="ticker-dot">✦</span></span>
+            <span class="ticker-item">Resim <span class="ticker-dot">✦</span></span>
+        </div>
     </div>
 
+    <!-- SECTION HEADER -->
+    <div class="section-header">
+        <span class="section-header-label">Faaliyet Alanları</span>
+        <div class="section-header-line"></div>
+        <span class="section-header-label">2026</span>
+    </div>
+
+    <!-- ACTIVITY CARDS -->
+    <main class="activities">
+
+        <!-- Akademik -->
+        <a href="akademik.html" class="activity-card card-red">
+            <div class="activity-index">01</div>
+            <div class="activity-icon-wrap">
+                <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M24 6L42 16V32L24 42L6 32V16L24 6Z" stroke="#c8402e" stroke-width="1.5" fill="none"/>
+                    <path d="M24 6V42M6 16L42 16M6 32L42 32" stroke="#c8402e" stroke-width="1" opacity="0.3"/>
+                    <circle cx="24" cy="24" r="4" fill="#c8402e"/>
+                </svg>
+            </div>
+            <h2 class="activity-title">Akademik Atölyeler</h2>
+            <p class="activity-desc">
+                Model Uçak, Model Gemi, Plastik Makyaj ve Green Box eğitimleriyle teorik bilginizi pratiğe dökün. 
+                Havacılıktan dijital içerik üreticiliğine kadar geleceğin mesleklerini deneyimleyin.
+            </p>
+            <div class="activity-link">
+                Detaylı Bilgi <span class="activity-link-arrow">→</span>
+            </div>
+        </a>
+
+        <!-- Sanat -->
+        <a href="sanat.html" class="activity-card card-orange">
+            <div class="activity-index">02</div>
+            <div class="activity-icon-wrap">
+                <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="24" cy="24" r="17" stroke="#c97b2a" stroke-width="1.5"/>
+                    <path d="M14 30 Q19 20 24 24 Q29 28 34 18" stroke="#c97b2a" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+                    <circle cx="14" cy="30" r="2.5" fill="#c97b2a"/>
+                    <circle cx="34" cy="18" r="2.5" fill="#c97b2a"/>
+                </svg>
+            </div>
+            <h2 class="activity-title">Sanat Kursları</h2>
+            <p class="activity-desc">
+                Resim, Tiyatro, Bağlama, Gitar ve Keman eğitimleriyle iç dünyanızı estetik bir şekilde dışa vurun. 
+                Uzman eğitmenler eşliğinde sanatsal yeteneklerinizi keşfedin ve sahne özgüveni kazanın.
+            </p>
+            <div class="activity-link">
+                Detaylı Bilgi <span class="activity-link-arrow">→</span>
+            </div>
+        </a>
+
+        <!-- Geziler -->
+        <a href="geziler.html" class="activity-card card-blue">
+            <div class="activity-index">03</div>
+            <div class="activity-icon-wrap">
+                <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="24" cy="24" r="17" stroke="#1a3a6b" stroke-width="1.5"/>
+                    <ellipse cx="24" cy="24" rx="8" ry="17" stroke="#1a3a6b" stroke-width="1" opacity="0.4"/>
+                    <line x1="7" y1="24" x2="41" y2="24" stroke="#1a3a6b" stroke-width="1" opacity="0.4"/>
+                    <line x1="10" y1="16" x2="38" y2="16" stroke="#1a3a6b" stroke-width="1" opacity="0.25"/>
+                    <line x1="10" y1="32" x2="38" y2="32" stroke="#1a3a6b" stroke-width="1" opacity="0.25"/>
+                </svg>
+            </div>
+            <h2 class="activity-title">Bilim & Kültür Gezileri</h2>
+            <p class="activity-desc">
+                Öğrenmeyi sınıf duvarlarının ötesine taşıyın. Cumhuriyet, Sanat ve Doğa Bilim müzeleri ile tarihi 
+                Yerebatan Sarnıcı'na düzenlenen turlarla genel kültürünüzü zenginleştirin.
+            </p>
+            <div class="activity-link">
+                Detaylı Bilgi <span class="activity-link-arrow">→</span>
+            </div>
+        </a>
+
+        <!-- Dil -->
+        <a href="dil.html" class="activity-card card-violet">
+            <div class="activity-index">04</div>
+            <div class="activity-icon-wrap">
+                <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="6" y="10" width="22" height="16" rx="3" stroke="#6b2e8a" stroke-width="1.5"/>
+                    <path d="M28 18H42V30C42 31.65 40.65 33 39 33H28L22 38V33H..." stroke="#6b2e8a" stroke-width="1.5"/>
+                    <rect x="20" y="22" width="22" height="16" rx="3" stroke="#6b2e8a" stroke-width="1.5" fill="var(--paper)"/>
+                    <line x1="25" y1="28" x2="37" y2="28" stroke="#6b2e8a" stroke-width="1" opacity="0.5"/>
+                    <line x1="25" y1="32" x2="33" y2="32" stroke="#6b2e8a" stroke-width="1" opacity="0.5"/>
+                </svg>
+            </div>
+            <h2 class="activity-title">Yabancı Dil Kursları</h2>
+            <p class="activity-desc">
+                Ezberci sistemden uzak, tamamen pratik ve konuşma odaklı yabancı dil eğitimi alın. A1, A2 ve B1 
+                seviyelerinde uluslararası standartlara (CEFR) uygun olarak verilen dersleri keşfedin.
+            </p>
+            <div class="activity-link">
+                Detaylı Bilgi <span class="activity-link-arrow">→</span>
+            </div>
+        </a>
+
+    </main>
+
+    <!-- FOOTER -->
     <footer>
-        <p>&copy; 2026 Küçükçekmece Belediyesi Gençlik Merkezi</p>
-        <p>Geliştirici: <span class="dev-name">Bilişim Grubu</span></p>
+        <div class="footer-brand">Gençlik Merkezi</div>
+        <div class="footer-copy">© 2026 Küçükçekmece Belediyesi</div>
+        <div class="footer-dev">Geliştirici: <span>Bilişim Grubu</span></div>
     </footer>
 
 </body>
