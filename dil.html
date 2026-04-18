@@ -1,1 +1,511 @@
-file:///C:/Users/technopc/AppData/Local/Temp/Rar$EXa4048.12253.rartemp/dil.html
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yabancı Dil Kursları — Gençlik Merkezi</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --ink: #0e0e0e;
+            --paper: #f5f0e8;
+            --paper-warm: #ede8dd;
+            --accent: #6b2e8a;
+            --accent-mid: #8b44aa;
+            --accent-pale: #f3edf7;
+            --muted: #7a7368;
+            --rule: rgba(14,14,14,0.12);
+        }
+
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background-color: var(--paper);
+            color: var(--ink);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 999;
+            opacity: 0.5;
+        }
+
+        /* MASTHEAD */
+        .masthead {
+            border-bottom: 2px solid var(--ink);
+            padding: 0 48px;
+            display: flex;
+            align-items: stretch;
+            height: 64px;
+        }
+        .masthead-back {
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--accent-mid);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding-right: 24px;
+            border-right: 1px solid var(--rule);
+            transition: gap 0.2s;
+        }
+        .masthead-back:hover { gap: 4px; }
+        .masthead-logo {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 28px;
+            letter-spacing: 0.04em;
+            color: var(--ink);
+            display: flex;
+            align-items: center;
+            padding-left: 24px;
+            flex: 1;
+        }
+        .masthead-tag {
+            display: flex;
+            align-items: center;
+            font-size: 10px;
+            font-weight: 500;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
+        /* HERO — full width dark */
+        .hero-band {
+            background: var(--ink);
+            padding: 64px 48px 56px;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-band::after {
+            content: 'A1 A2 B1';
+            position: absolute;
+            right: 48px;
+            bottom: -20px;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 120px;
+            color: rgba(255,255,255,0.04);
+            letter-spacing: 0.06em;
+            pointer-events: none;
+            white-space: nowrap;
+        }
+        .hero-number {
+            font-size: 10px;
+            font-weight: 500;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.35);
+            margin-bottom: 20px;
+        }
+        .hero-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(64px, 9vw, 120px);
+            line-height: 0.9;
+            color: #fff;
+            letter-spacing: 0.01em;
+            margin-bottom: 32px;
+        }
+        .hero-title em {
+            font-family: 'DM Serif Display', serif;
+            font-style: italic;
+            color: var(--accent-mid);
+        }
+        .hero-bottom {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            align-items: end;
+        }
+        .hero-desc {
+            font-size: 14px;
+            font-weight: 300;
+            color: rgba(255,255,255,0.55);
+            line-height: 1.85;
+        }
+        .cefr-badges {
+            display: flex;
+            gap: 16px;
+            justify-content: flex-end;
+        }
+        .cefr-badge {
+            border: 1px solid rgba(255,255,255,0.15);
+            padding: 20px 24px;
+            text-align: center;
+            min-width: 80px;
+            transition: border-color 0.3s, background 0.3s;
+        }
+        .cefr-badge:hover {
+            border-color: var(--accent-mid);
+            background: rgba(107,46,138,0.12);
+        }
+        .cefr-level {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 36px;
+            color: #fff;
+            line-height: 1;
+        }
+        .cefr-label {
+            font-size: 9px;
+            font-weight: 500;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.35);
+            margin-top: 6px;
+        }
+
+        /* SECTION RULE */
+        .section-rule {
+            padding: 18px 48px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            border-bottom: 1px solid var(--rule);
+        }
+        .section-rule-label {
+            font-size: 10px;
+            font-weight: 500;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--muted);
+            white-space: nowrap;
+        }
+        .section-rule-line { flex: 1; height: 1px; background: var(--rule); }
+
+        /* LEVELS — 3 col detailed */
+        .levels {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            border-bottom: 2px solid var(--ink);
+        }
+
+        .level {
+            border-right: 1px solid var(--ink);
+            padding: 48px 40px;
+            position: relative;
+            transition: background 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+        .level:last-child { border-right: none; }
+        .level:hover { background: var(--paper-warm); }
+
+        .level-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 32px;
+        }
+
+        .level-badge {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 52px;
+            line-height: 1;
+            color: var(--accent);
+        }
+
+        .level-meta { text-align: right; }
+
+        .level-cefr {
+            font-size: 10px;
+            font-weight: 500;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--accent-mid);
+            margin-bottom: 4px;
+        }
+        .level-name {
+            font-size: 12px;
+            font-weight: 300;
+            color: var(--muted);
+        }
+
+        .level-title {
+            font-family: 'DM Serif Display', serif;
+            font-size: 22px;
+            line-height: 1.2;
+            color: var(--ink);
+            margin-bottom: 16px;
+        }
+
+        .level-desc {
+            font-size: 13px;
+            font-weight: 300;
+            color: var(--muted);
+            line-height: 1.85;
+            flex: 1;
+            margin-bottom: 28px;
+        }
+
+        .level-skills {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .skill-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 12px;
+            font-weight: 400;
+            color: var(--ink);
+        }
+
+        .skill-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent);
+            flex-shrink: 0;
+        }
+
+        .level-progress-bar {
+            height: 2px;
+            background: var(--rule);
+            margin-bottom: 28px;
+            position: relative;
+        }
+        .level-progress-fill {
+            height: 100%;
+            background: var(--accent);
+            transition: width 0.6s ease;
+        }
+
+        /* METHOD STRIP */
+        .method-strip {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            border-bottom: 1px solid var(--ink);
+        }
+        .method-cell {
+            padding: 36px 32px;
+            border-right: 1px solid var(--rule);
+        }
+        .method-cell:last-child { border-right: none; }
+        .method-icon {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 32px;
+            color: var(--accent);
+            margin-bottom: 12px;
+            line-height: 1;
+        }
+        .method-title {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--ink);
+            margin-bottom: 8px;
+        }
+        .method-desc {
+            font-size: 12px;
+            font-weight: 300;
+            color: var(--muted);
+            line-height: 1.7;
+        }
+
+        /* FOOTER */
+        footer {
+            border-top: 2px solid var(--ink);
+            padding: 28px 48px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .footer-brand { font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 0.06em; }
+        .footer-copy { font-size: 11px; font-weight: 300; color: var(--muted); }
+        .footer-dev { font-size: 11px; color: var(--muted); }
+        .footer-dev span { font-weight: 500; color: var(--accent-mid); }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        .hero-number  { animation: fadeUp 0.5s ease both 0.1s; }
+        .hero-title   { animation: fadeUp 0.5s ease both 0.2s; }
+        .hero-bottom  { animation: fadeUp 0.5s ease both 0.35s; }
+        .level:nth-child(1) { animation: fadeUp 0.4s ease both 0.45s; }
+        .level:nth-child(2) { animation: fadeUp 0.4s ease both 0.55s; }
+        .level:nth-child(3) { animation: fadeUp 0.4s ease both 0.65s; }
+
+        @media (max-width: 900px) {
+            .masthead { padding: 0 24px; }
+            .hero-band { padding: 40px 24px; }
+            .hero-band::after { display: none; }
+            .hero-bottom { grid-template-columns: 1fr; }
+            .cefr-badges { justify-content: flex-start; }
+            .levels { grid-template-columns: 1fr; }
+            .level { border-right: none; }
+            .method-strip { grid-template-columns: 1fr 1fr; }
+            .method-cell:nth-child(2) { border-right: none; }
+            .section-rule { padding: 16px 24px; }
+            footer { padding: 20px 24px; flex-direction: column; gap: 10px; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+<header class="masthead">
+    <a href="index.html" class="masthead-back">← Geri</a>
+    <div class="masthead-logo">Yabancı Dil Kursları</div>
+    <div class="masthead-tag">Gençlik Merkezi</div>
+</header>
+
+<section class="hero-band">
+    <p class="hero-number">04 / 04 — Dil Programı</p>
+    <h1 class="hero-title">Dünyayla<br><em>konuş</em></h1>
+    <div class="hero-bottom">
+        <p class="hero-desc">
+            Ezberci sistemden uzak, tamamen pratik ve konuşma odaklı yabancı dil eğitimi alın. 
+            Uluslararası CEFR standartlarına uygun üç seviyede sunulan derslerimiz, 
+            sizi gerçek iletişim için hazırlar.
+        </p>
+        <div class="cefr-badges">
+            <div class="cefr-badge">
+                <div class="cefr-level">A1</div>
+                <div class="cefr-label">Başlangıç</div>
+            </div>
+            <div class="cefr-badge">
+                <div class="cefr-level">A2</div>
+                <div class="cefr-label">Temel</div>
+            </div>
+            <div class="cefr-badge">
+                <div class="cefr-level">B1</div>
+                <div class="cefr-label">Orta</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="section-rule">
+    <span class="section-rule-label">Seviyeler</span>
+    <div class="section-rule-line"></div>
+    <span class="section-rule-label">CEFR Standartları</span>
+</div>
+
+<main class="levels">
+
+    <div class="level">
+        <div class="level-header">
+            <div class="level-badge">A1</div>
+            <div class="level-meta">
+                <div class="level-cefr">CEFR</div>
+                <div class="level-name">Başlangıç Seviyesi</div>
+            </div>
+        </div>
+        <div class="level-progress-bar">
+            <div class="level-progress-fill" style="width: 25%;"></div>
+        </div>
+        <h2 class="level-title">İlk Adım</h2>
+        <p class="level-desc">
+            Hiç dil bilmeyenler için tasarlanmış bu seviyede günlük yaşamda en 
+            temel ifadeleri ve basit soruları anlama ve kullanma becerisi kazanırsınız. 
+            Kendinizi tanıtabilir, selamlayabilir ve temel ihtiyaçlarınızı ifade edebilirsiniz.
+        </p>
+        <div class="level-skills">
+            <div class="skill-row"><div class="skill-dot"></div> Temel selamlama ve tanışma</div>
+            <div class="skill-row"><div class="skill-dot"></div> Sayılar, renkler, günler</div>
+            <div class="skill-row"><div class="skill-dot"></div> Soru cümleleri kurma</div>
+            <div class="skill-row"><div class="skill-dot"></div> Kişisel bilgi aktarma</div>
+        </div>
+    </div>
+
+    <div class="level">
+        <div class="level-header">
+            <div class="level-badge">A2</div>
+            <div class="level-meta">
+                <div class="level-cefr">CEFR</div>
+                <div class="level-name">Temel Seviye</div>
+            </div>
+        </div>
+        <div class="level-progress-bar">
+            <div class="level-progress-fill" style="width: 50%;"></div>
+        </div>
+        <h2 class="level-title">Temel İletişim</h2>
+        <p class="level-desc">
+            Günlük rutinleri ve tanıdık konuları anlayabilir, doğrudan ihtiyaç 
+            duyulan basit ve alışılmış görevleri gerçekleştirebilirsiniz. Kısa sosyal 
+            ortamlarda iletişim kurar, geçmiş olayları anlatabilirsiniz.
+        </p>
+        <div class="level-skills">
+            <div class="skill-row"><div class="skill-dot"></div> Alışveriş ve restoran diyalogları</div>
+            <div class="skill-row"><div class="skill-dot"></div> Geçmiş zaman kullanımı</div>
+            <div class="skill-row"><div class="skill-dot"></div> Yön tarif etme</div>
+            <div class="skill-row"><div class="skill-dot"></div> Kısa yazılı metin anlama</div>
+        </div>
+    </div>
+
+    <div class="level">
+        <div class="level-header">
+            <div class="level-badge">B1</div>
+            <div class="level-meta">
+                <div class="level-cefr">CEFR</div>
+                <div class="level-name">Orta Seviye</div>
+            </div>
+        </div>
+        <div class="level-progress-bar">
+            <div class="level-progress-fill" style="width: 75%;"></div>
+        </div>
+        <h2 class="level-title">Bağımsız Kullanım</h2>
+        <p class="level-desc">
+            Tanıdık konularda açık ve standart dilde yapılan konuşmaların ana 
+            noktalarını anlayabilirsiniz. Seyahat ederken dil bilgisi olmayan bir 
+            ortamda ortaya çıkan durumların üstesinden gelebilirsiniz.
+        </p>
+        <div class="level-skills">
+            <div class="skill-row"><div class="skill-dot"></div> Görüş ve fikir belirtme</div>
+            <div class="skill-row"><div class="skill-dot"></div> Haber metinleri anlama</div>
+            <div class="skill-row"><div class="skill-dot"></div> Seyahat konuşmaları</div>
+            <div class="skill-row"><div class="skill-dot"></div> Paragraf düzeyinde yazma</div>
+        </div>
+    </div>
+
+</main>
+
+<div class="section-rule">
+    <span class="section-rule-label">Eğitim Yöntemi</span>
+    <div class="section-rule-line"></div>
+</div>
+
+<section class="method-strip">
+    <div class="method-cell">
+        <div class="method-icon">01</div>
+        <div class="method-title">Konuşma Odaklı</div>
+        <p class="method-desc">Dil öğreniminde en büyük engel olan konuşma korkusunu aşmanıza yardımcı olacak uygulamalı seanslar.</p>
+    </div>
+    <div class="method-cell">
+        <div class="method-icon">02</div>
+        <div class="method-title">Ezber Yok</div>
+        <p class="method-desc">Kural ezberlemek yerine bağlamsal öğrenme yöntemiyle dili doğal akışında kavrayın.</p>
+    </div>
+    <div class="method-cell">
+        <div class="method-icon">03</div>
+        <div class="method-title">CEFR Uyumlu</div>
+        <p class="method-desc">Uluslararası Ortak Dil Referans Çerçevesi standartlarıyla hazırlanmış müfredat ve değerlendirme sistemi.</p>
+    </div>
+    <div class="method-cell">
+        <div class="method-icon">04</div>
+        <div class="method-title">Küçük Gruplar</div>
+        <p class="method-desc">Kişisel ilgi ve geri bildirim için sınıf mevcudu sınırlı tutulur. Her öğrenci konuşma fırsatı bulur.</p>
+    </div>
+</section>
+
+<footer>
+    <div class="footer-brand">Gençlik Merkezi</div>
+    <div class="footer-copy">© 2026 Küçükçekmece Belediyesi</div>
+    <div class="footer-dev">Geliştirici: <span>Bilişim Grubu</span></div>
+</footer>
+
+</body>
+</html>
