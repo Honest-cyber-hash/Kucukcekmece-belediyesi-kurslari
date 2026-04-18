@@ -3,19 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KÇBM Gençlik Merkezi - Sade Arayüz</title>
+    <title>Küçükçekmece Gençlik Merkezi - Premium Arayüz</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
     <style>
-        /* TEMEL AYARLAR (Minimalist) */
-        :root {
-            --bg-color: #fcfcfc;    /* Çok açık, beyaza yakın gri */
-            --card-bg: #ffffff;      /* Tam beyaz kartlar */
-            --text-main: #333333;   /* Koyu gri yazı */
-            --text-sub: #777777;    /* Açık gri alt yazı */
-            --primary: #0056b3;     /* Belediye Mavisi (Sadece vurgu için) */
-            --border: #eeeeee;      /* Çok hafif çizgiler */
-        }
-
+        /* GENEL AYARLAR VE KOYU MAVİ ARKA PLAN */
         * {
             margin: 0;
             padding: 0;
@@ -23,108 +20,148 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-main);
+            font-family: 'Poppins', sans-serif;
+            /* Derin ve Koyu Mavi Degrade (Gradient) Arka Plan */
+            background: linear-gradient(135deg, #0a192f 0%, #112240 100%);
+            background-attachment: fixed;
+            color: #e6f1ff; /* Göz yormayan kırık beyaz yazı rengi */
             line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
-        /* ÜST BAŞLIK (SADECE METİN) */
+        /* ÜST BAŞLIK */
         header {
             text-align: center;
-            padding: 60px 20px 40px 20px;
-            background: white;
-            border-bottom: 1px solid var(--border);
+            padding: 70px 20px 30px 20px;
         }
 
         header h1 {
-            font-size: 1.8em;
+            font-size: 2.5em;
             font-weight: 700;
-            color: var(--primary);
-            letter-spacing: -1px;
-            margin-bottom: 5px;
+            color: #ffffff;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
 
         header p {
-            font-size: 1em;
-            color: var(--text-sub);
-            font-weight: 400;
+            font-size: 1.1em;
+            color: #8892b0;
+            font-weight: 300;
+            letter-spacing: 2px;
+            text-transform: uppercase;
         }
 
-        /* IZGARA YAPISI (4 Kartlı) */
+        /* IZGARA YAPISI (Kartların Dizilimi) */
         .grid-container {
-            max-width: 1100px;
+            max-width: 1200px;
             margin: 40px auto;
             padding: 0 20px;
             display: grid;
-            /* Ekran genişliğine göre otomatik sığan kartlar */
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); 
-            gap: 25px;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); 
+            gap: 30px;
+            flex-grow: 1; /* İçeriğin ekranı doldurmasını sağlar */
         }
 
-        /* SADE KART TASARIMI */
+        /* CAM EFEKTLİ (GLASSMORPHISM) KART TASARIMI */
         .card {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border); /* Hafif çerçeve */
-            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.03); /* Çok hafif beyaz şeffaflık */
+            backdrop-filter: blur(15px); /* Arka planı bulanıklaştırarak cam hissi verir */
+            -webkit-backdrop-filter: blur(15px); /* Safari desteği */
+            border: 1px solid rgba(255, 255, 255, 0.08); /* İnce şeffaf çerçeve */
+            border-radius: 20px; /* Yuvarlak köşeler */
             padding: 40px 30px;
             text-align: center;
-            text-decoration: none; /* Link çizgisini kaldır */
+            text-decoration: none;
             color: inherit;
-            transition: all 0.3s ease; /* Yumuşak geçiş efektleri */
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Yaylanma efekti */
             display: flex;
             flex-direction: column;
             align-items: center;
+            position: relative;
+            overflow: hidden;
         }
 
-        /* Hover (Üzerine Gelince) Efekti - Minimalist Vurgu */
+        /* Kartın İçine Işık Yansıması Efekti */
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(to right, transparent, rgba(255,255,255,0.05), transparent);
+            transform: skewX(-20deg);
+            transition: all 0.7s ease;
+        }
+
+        /* Üzerine Gelince (Hover) Kart Efekti */
         .card:hover {
-            transform: translateY(-5px); /* Hafif yukarı kalkma */
-            border-color: var(--primary); /* Çerçeve maviye döner */
-            box-shadow: 0 10px 20px rgba(0,0,0,0.03); /* Çok hafif gölge */
+            transform: translateY(-12px);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(100, 255, 218, 0.3); /* Açık turkuaz çerçeve parlaması */
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
         }
 
-        /* SİMGELER */
+        .card:hover::before {
+            left: 200%; /* Işık yansıması animasyonu */
+        }
+
+        /* PARLAYAN İKONLAR */
         .card-icon {
-            font-size: 3em; /* Büyük simge */
-            color: var(--primary); /* Mavi simge */
+            font-size: 3.5em;
             margin-bottom: 25px;
-            opacity: 0.9;
+            color: #64ffda; /* Neon Turkuaz/Cyan rengi */
+            text-shadow: 0 0 20px rgba(100, 255, 218, 0.4); /* İkonların parlaması */
+            transition: transform 0.3s ease;
         }
 
-        /* KART BAŞLIĞI */
+        .card:hover .card-icon {
+            transform: scale(1.1); /* Üzerine gelince ikon hafif büyür */
+        }
+
+        /* KART BAŞLIKLARI VE METİNLERİ */
         .card-title {
-            font-size: 1.2em;
+            font-size: 1.3em;
             font-weight: 600;
-            margin-bottom: 10px;
-            color: var(--text-main);
-            letter-spacing: -0.5px;
+            margin-bottom: 12px;
+            color: #ccd6f6; /* Açık mavi-gri */
         }
 
-        /* KART ALT METNİ */
         .card-desc {
             font-size: 0.9em;
-            color: var(--text-sub);
-            font-weight: 400;
-            max-width: 200px; /* Metni daraltıp sadeleştirir */
+            color: #8892b0;
+            font-weight: 300;
+            line-height: 1.5;
         }
 
         /* ALT BİLGİ (FOOTER) */
         footer {
             text-align: center;
             padding: 30px 20px;
-            margin-top: 60px;
+            margin-top: auto;
             font-size: 0.85em;
-            color: var(--text-sub);
-            border-top: 1px solid var(--border);
-            background: white;
+            color: #8892b0;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            background: rgba(10, 25, 47, 0.5); /* Koyu mavi hafif şeffaf */
         }
 
-        /* MOBİL UYUMLULUK AYARLARI */
-        @media (max-width: 600px) {
-            header { padding: 40px 15px; }
-            header h1 { font-size: 1.5em; }
-            .grid-container { gap: 15px; margin: 20px auto; }
+        footer p {
+            margin: 5px 0;
+        }
+
+        .dev-name {
+            color: #64ffda;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        /* MOBİL CİHAZ UYUMU */
+        @media (max-width: 768px) {
+            header h1 { font-size: 2em; }
+            .grid-container { grid-template-columns: 1fr; max-width: 400px; }
             .card { padding: 30px 20px; }
         }
     </style>
@@ -133,40 +170,40 @@
 
     <header>
         <h1>Gençlik Merkezi</h1>
-        <p>Küçükçekmece Belediyesi Faaliyetleri</p>
+        <p>Geleceğe Değer Katan Faaliyetler</p>
     </header>
 
     <div class="grid-container">
 
         <a href="akademik.html" class="card">
-            <i class="fas fa-graduation-cap card-icon"></i>
+            <i class="fas fa-rocket card-icon"></i>
             <h2 class="card-title">Akademik Atölyeler</h2>
-            <p class="card-desc">Model Uçak, Plastik Makyaj, Green Box</p>
+            <p class="card-desc">Model Uçak, Plastik Makyaj, Green Box ve Mesleki Gelişim</p>
         </a>
 
         <a href="sanat.html" class="card">
-            <i class="fas fa-paint-brush card-icon"></i>
+            <i class="fas fa-masks-theater card-icon"></i>
             <h2 class="card-title">Sanat Kursları</h2>
-            <p class="card-desc">Resim, Tiyatro, Bağlama, Gitar, Keman</p>
+            <p class="card-desc">Resim, Tiyatro, Bağlama, Gitar, Keman Eğitimleri</p>
         </a>
 
         <a href="geziler.html" class="card">
-            <i class="fas fa-map-location-dot card-icon"></i>
-            <h2 class="card-title">Bilim Kültür Gezileri</h2>
-            <p class="card-desc">Müzeler, Tarihi Alanlar, Sarnıçlar</p>
+            <i class="fas fa-compass card-icon"></i>
+            <h2 class="card-title">Kültür Gezileri</h2>
+            <p class="card-desc">Müzeler, Tarihi Sarnıçlar ve Doğa Bilim Merkezleri</p>
         </a>
 
         <a href="dil.html" class="card">
-            <i class="fas fa-language card-icon"></i>
+            <i class="fas fa-earth-americas card-icon"></i>
             <h2 class="card-title">Yabancı Dil</h2>
-            <p class="card-desc">A1, A2, B1 Seviye Dil Eğitimi</p>
+            <p class="card-desc">A1, A2, B1 Seviye Uluslararası Dil Kursları</p>
         </a>
 
     </div>
 
     <footer>
-        <p>&copy; 2026 Küçükçekmece Gençlik Merkezi</p>
-        <p>Geliştirici: Bilişim Grubu</p>
+        <p>&copy; 2026 Küçükçekmece Belediyesi Gençlik Merkezi</p>
+        <p>Geliştirici: <span class="dev-name">Bilişim Grubu</span></p>
     </footer>
 
 </body>
