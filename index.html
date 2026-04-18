@@ -3,90 +3,171 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Küçükçekmece Gençlik Merkezi - Faaliyetler</title>
+    <title>KÇBM Gençlik Merkezi - Sade Arayüz</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        :root { --primary: #0056b3; --dark: #2c3e50; --light: #f4f7f6; }
-        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: var(--light); color: #333; }
-        header { background: var(--primary); color: white; padding: 60px 20px; text-align: center; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 30px; padding: 40px; max-width: 1200px; margin: auto; }
-        .card { background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 20px rgba(0,0,0,0.1); transition: 0.3s; cursor: pointer; text-decoration: none; color: inherit; display: flex; flex-direction: column; }
-        .card:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(0,0,0,0.2); }
-        .card-header { background: #2c3e50; color: #f39c12; padding: 20px; text-align: center; font-size: 1.2em; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
-        .card-body { padding: 30px; flex-grow: 1; }
-        .card-body ul { list-style-type: none; padding: 0; margin: 0; }
-        .card-body li { padding: 8px 0; border-bottom: 1px solid #eee; color: #555; font-weight: 500; }
-        .card-body li::before { content: "• "; color: var(--primary); font-weight: bold; }
-        .btn { display: inline-block; margin-top: 20px; color: var(--primary); font-weight: bold; }
-        footer { background: var(--dark); color: white; text-align: center; padding: 20px; margin-top: 40px; }
+        /* TEMEL AYARLAR (Minimalist) */
+        :root {
+            --bg-color: #fcfcfc;    /* Çok açık, beyaza yakın gri */
+            --card-bg: #ffffff;      /* Tam beyaz kartlar */
+            --text-main: #333333;   /* Koyu gri yazı */
+            --text-sub: #777777;    /* Açık gri alt yazı */
+            --primary: #0056b3;     /* Belediye Mavisi (Sadece vurgu için) */
+            --border: #eeeeee;      /* Çok hafif çizgiler */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        /* ÜST BAŞLIK (SADECE METİN) */
+        header {
+            text-align: center;
+            padding: 60px 20px 40px 20px;
+            background: white;
+            border-bottom: 1px solid var(--border);
+        }
+
+        header h1 {
+            font-size: 1.8em;
+            font-weight: 700;
+            color: var(--primary);
+            letter-spacing: -1px;
+            margin-bottom: 5px;
+        }
+
+        header p {
+            font-size: 1em;
+            color: var(--text-sub);
+            font-weight: 400;
+        }
+
+        /* IZGARA YAPISI (4 Kartlı) */
+        .grid-container {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 0 20px;
+            display: grid;
+            /* Ekran genişliğine göre otomatik sığan kartlar */
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); 
+            gap: 25px;
+        }
+
+        /* SADE KART TASARIMI */
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border); /* Hafif çerçeve */
+            border-radius: 12px;
+            padding: 40px 30px;
+            text-align: center;
+            text-decoration: none; /* Link çizgisini kaldır */
+            color: inherit;
+            transition: all 0.3s ease; /* Yumuşak geçiş efektleri */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Hover (Üzerine Gelince) Efekti - Minimalist Vurgu */
+        .card:hover {
+            transform: translateY(-5px); /* Hafif yukarı kalkma */
+            border-color: var(--primary); /* Çerçeve maviye döner */
+            box-shadow: 0 10px 20px rgba(0,0,0,0.03); /* Çok hafif gölge */
+        }
+
+        /* SİMGELER */
+        .card-icon {
+            font-size: 3em; /* Büyük simge */
+            color: var(--primary); /* Mavi simge */
+            margin-bottom: 25px;
+            opacity: 0.9;
+        }
+
+        /* KART BAŞLIĞI */
+        .card-title {
+            font-size: 1.2em;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--text-main);
+            letter-spacing: -0.5px;
+        }
+
+        /* KART ALT METNİ */
+        .card-desc {
+            font-size: 0.9em;
+            color: var(--text-sub);
+            font-weight: 400;
+            max-width: 200px; /* Metni daraltıp sadeleştirir */
+        }
+
+        /* ALT BİLGİ (FOOTER) */
+        footer {
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 60px;
+            font-size: 0.85em;
+            color: var(--text-sub);
+            border-top: 1px solid var(--border);
+            background: white;
+        }
+
+        /* MOBİL UYUMLULUK AYARLARI */
+        @media (max-width: 600px) {
+            header { padding: 40px 15px; }
+            header h1 { font-size: 1.5em; }
+            .grid-container { gap: 15px; margin: 20px auto; }
+            .card { padding: 30px 20px; }
+        }
     </style>
 </head>
 <body>
+
     <header>
-        <h1>Gençlik Merkezi Faaliyetleri</h1>
-        <p>Küçükçekmece Belediyesi Gençlik Merkezi Vizyonu</p>
+        <h1>Gençlik Merkezi</h1>
+        <p>Küçükçekmece Belediyesi Faaliyetleri</p>
     </header>
 
-    <div class="grid">
+    <div class="grid-container">
+
         <a href="akademik.html" class="card">
-            <div class="card-header">Akademik Mesleki Atölyeler</div>
-            <div class="card-body">
-                <ul>
-                    <li>Model Uçak</li>
-                    <li>Model Gemi</li>
-                    <li>Plastik Makyaj</li>
-                    <li>Green Box</li>
-                </ul>
-                <span class="btn">Detayları Gör →</span>
-            </div>
+            <i class="fas fa-graduation-cap card-icon"></i>
+            <h2 class="card-title">Akademik Atölyeler</h2>
+            <p class="card-desc">Model Uçak, Plastik Makyaj, Green Box</p>
         </a>
 
         <a href="sanat.html" class="card">
-            <div class="card-header">Sanat Kursları</div>
-            <div class="card-body">
-                <ul>
-                    <li>Resim</li>
-                    <li>Bağlama</li>
-                    <li>Tiyatro</li>
-                    <li>Gitar</li>
-                    <li>Keman</li>
-                </ul>
-                <span class="btn">Detayları Gör →</span>
-            </div>
+            <i class="fas fa-paint-brush card-icon"></i>
+            <h2 class="card-title">Sanat Kursları</h2>
+            <p class="card-desc">Resim, Tiyatro, Bağlama, Gitar, Keman</p>
         </a>
 
         <a href="geziler.html" class="card">
-            <div class="card-header">Bilim Kültür Gezileri</div>
-            <div class="card-body">
-                <ul>
-                    <li>Cumhuriyet Müzesi & İstanbul Sanat Müzesi</li>
-                    <li>Yerebatan Sarnıcı & Atatürk Müzesi</li>
-                    <li>Doğa Bilim Müzesi & Dijital Sanatlar Müzesi</li>
-                </ul>
-                <span class="btn">Detayları Gör →</span>
-            </div>
+            <i class="fas fa-map-location-dot card-icon"></i>
+            <h2 class="card-title">Bilim Kültür Gezileri</h2>
+            <p class="card-desc">Müzeler, Tarihi Alanlar, Sarnıçlar</p>
         </a>
 
         <a href="dil.html" class="card">
-            <div class="card-header">Yabancı Dil Kursları</div>
-            <div class="card-body">
-                <ul>
-                    <li>A1 Seviye Eğitimi</li>
-                    <li>A2 Seviye Eğitimi</li>
-                    <li>B1 Seviye Eğitimi</li>
-                </ul>
-                <span class="btn">Detayları Gör →</span>
-            </div>
+            <i class="fas fa-language card-icon"></i>
+            <h2 class="card-title">Yabancı Dil</h2>
+            <p class="card-desc">A1, A2, B1 Seviye Dil Eğitimi</p>
         </a>
+
     </div>
 
     <footer>
-        <p>Geliştirici: Bilişim Grubu</p>
         <p>&copy; 2026 Küçükçekmece Gençlik Merkezi</p>
+        <p>Geliştirici: Bilişim Grubu</p>
     </footer>
+
 </body>
 </html>
-
-
-
-
-
